@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RecursoCapacitacionCreateDlg" widgetVar="RecursoCapacitacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateRecursoCapacitacionTitle}">
+            <h:form id="RecursoCapacitacionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{recursoCapacitacionController.selected != null}">
+                        <p:outputLabel value="#{messages.CreateRecursoCapacitacionLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{recursoCapacitacionController.selected.cantidad}" title="#{messages.CreateRecursoCapacitacionTitle_cantidad}" required="true" requiredMessage="#{messages.CreateRecursoCapacitacionRequiredMessage_cantidad}"/>
+                        <p:outputLabel value="#{messages.CreateRecursoCapacitacionLabel_idMatEscritorio}" for="idMatEscritorio" />
+                        <p:inputText id="idMatEscritorio" value="#{recursoCapacitacionController.selected.idMatEscritorio}" title="#{messages.CreateRecursoCapacitacionTitle_idMatEscritorio}" required="true" requiredMessage="#{messages.CreateRecursoCapacitacionRequiredMessage_idMatEscritorio}"/>
+                        <p:outputLabel value="#{messages.CreateRecursoCapacitacionLabel_idPlanificacion}" for="idPlanificacion" />
+                        <p:selectOneMenu id="idPlanificacion" value="#{recursoCapacitacionController.selected.idPlanificacion}" required="true" requiredMessage="#{messages.EditRecursoCapacitacionRequiredMessage_idPlanificacion}">
+                            <f:selectItems value="#{planCapacitacionController.itemsAvailableSelectOne}"
+                                           var="idPlanificacionItem"
+                                           itemValue="#{idPlanificacionItem}" itemLabel="#{idPlanificacionItem.periodo}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{messages.CreateRecursoCapacitacionLabel_idPerfilCapa}" for="idPerfilCapa" />
+                        <p:selectOneMenu id="idPerfilCapa" value="#{recursoCapacitacionController.selected.idPerfilCapa}" >
+                            <f:selectItems value="#{perfilCapacitadorController.itemsAvailableSelectOne}"
+                                           var="idPerfilCapaItem"
+                                           itemValue="#{idPerfilCapaItem}" itemLabel="#{idPerfilCapaItem.nombre}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{messages.CreateRecursoCapacitacionLabel_idTipoRecurso}" for="idTipoRecurso" />
+                        <p:selectOneMenu id="idTipoRecurso" value="#{recursoCapacitacionController.selected.idTipoRecurso}" required="true" requiredMessage="#{messages.EditRecursoCapacitacionRequiredMessage_idTipoRecurso}">
+                            <f:selectItems value="#{parametrosController.itemsAvailableSelectOne}"
+                                           var="idTipoRecursoItem"
+                                           itemValue="#{idTipoRecursoItem}" itemLabel="#{idTipoRecursoItem.descripcion}" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{recursoCapacitacionController.create}" value="#{messages.Save}" update="display,:RecursoCapacitacionListForm:datalist,:growl" oncomplete="handleSubmit(args,'RecursoCapacitacionCreateDialog');"/>
+                    <p:commandButton value="#{messages.Cancel}" onclick="RecursoCapacitacionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

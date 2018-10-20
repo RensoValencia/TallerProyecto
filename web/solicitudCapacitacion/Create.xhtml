@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SolicitudCapacitacionCreateDlg" widgetVar="SolicitudCapacitacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear una nueva solicitud">
+            <h:form id="SolicitudCapacitacionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{solicitudCapacitacionController.selected != null}">
+                        <p:outputLabel value="#{messages.CreateSolicitudCapacitacionLabel_fechaSolicitud}" for="fechaSolicitud" />
+                        <p:calendar id="fechaSolicitud" pattern="MM/dd/yyyy" value="#{solicitudCapacitacionController.selected.fechaSolicitud}" title="#{messages.EditSolicitudCapacitacionTitle_fechaSolicitud}" required="true" requiredMessage="#{messages.EditSolicitudCapacitacionRequiredMessage_fechaSolicitud}" showOn="button"/>
+                        <p:outputLabel value="#{messages.CreateSolicitudCapacitacionLabel_fechaAtenciondate}" for="fechaAtenciondate" />
+                        <p:calendar id="fechaAtenciondate" pattern="MM/dd/yyyy" value="#{solicitudCapacitacionController.selected.fechaAtenciondate}" title="#{messages.EditSolicitudCapacitacionTitle_fechaAtenciondate}" required="true" requiredMessage="#{messages.EditSolicitudCapacitacionRequiredMessage_fechaAtenciondate}" showOn="button"/>
+                        <p:outputLabel value="#{messages.CreateSolicitudCapacitacionLabel_observacion}" for="observacion" />
+                        <p:inputText id="observacion" value="#{solicitudCapacitacionController.selected.observacion}" title="#{messages.CreateSolicitudCapacitacionTitle_observacion}" required="true" requiredMessage="#{messages.CreateSolicitudCapacitacionRequiredMessage_observacion}"/>
+                        <p:outputLabel value="#{messages.CreateSolicitudCapacitacionLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{solicitudCapacitacionController.selected.estado}" required="true" requiredMessage="#{messages.EditSolicitudCapacitacionRequiredMessage_estado}">
+                            <f:selectItems value="#{parametrosController.estadoSolicitud}"
+                                           var="estadoItem"
+                                           itemValue="#{estadoItem}" itemLabel="#{estadoItem.descripcion}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{messages.CreateSolicitudCapacitacionLabel_idArea}" for="idArea" />
+                        <p:selectOneMenu id="idArea" value="#{solicitudCapacitacionController.selected.idArea}" required="true" requiredMessage="#{messages.EditSolicitudCapacitacionRequiredMessage_idArea}">
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="idAreaItem"
+                                           itemValue="#{idAreaItem}" itemLabel="#{idAreaItem.nombre}" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{solicitudCapacitacionController.create}" value="#{messages.Save}" update="display,:SolicitudCapacitacionListForm:datalist,:growl" oncomplete="handleSubmit(args,'SolicitudCapacitacionCreateDialog');"/>
+                    <p:commandButton value="#{messages.Cancel}" onclick="SolicitudCapacitacionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

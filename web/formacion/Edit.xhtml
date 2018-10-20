@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FormacionEditDlg" widgetVar="FormacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.EditFormacionTitle}">
+            <h:form id="FormacionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{formacionController.selected != null}">
+                        <p:outputLabel value="#{messages.EditFormacionLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{formacionController.selected.nombre}" title="#{messages.EditFormacionTitle_nombre}" required="true" requiredMessage="#{messages.EditFormacionRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{messages.EditFormacionLabel_maximoParticipantes}" for="maximoParticipantes" />
+                        <p:inputText id="maximoParticipantes" value="#{formacionController.selected.maximoParticipantes}" title="#{messages.EditFormacionTitle_maximoParticipantes}" required="true" requiredMessage="#{messages.EditFormacionRequiredMessage_maximoParticipantes}"/>
+                        <p:outputLabel value="#{messages.EditFormacionLabel_tipoFormacion}" for="tipoFormacion" />
+                        <p:selectOneMenu id="tipoFormacion" value="#{formacionController.selected.tipoFormacion}" required="true" requiredMessage="#{messages.EditFormacionRequiredMessage_tipoFormacion}">
+                            <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                            <f:selectItems value="#{parametrosController.listTipoFormacion}"
+                                           var="tipoFormacionItem"
+                                           itemValue="#{tipoFormacionItem}" itemLabel="#{tipoFormacionItem.descripcion}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{messages.EditFormacionLabel_tipoSala}" for="tipoSala" />
+                        <p:selectOneMenu id="tipoSala" value="#{formacionController.selected.tipoSala}" required="true" requiredMessage="#{messages.EditFormacionRequiredMessage_tipoSala}">
+                            <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                            <f:selectItems value="#{parametrosController.listTipoSala}"
+                                           var="tipoSalaItem"
+                                           itemValue="#{tipoSalaItem}" itemLabel="#{tipoSalaItem.descripcion}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Area" for="idArea" />
+                        <p:selectOneMenu id="idArea" value="#{formacionController.selected.idArea}">
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="area"
+                                           itemValue="#{area}" itemLabel="#{area.nombre}"/>
+                        </p:selectOneMenu>    
+                        
+                        <p:outputLabel value="Tipo capacitación" for="idTipoCapacitacion" />
+                        <p:selectOneMenu id="idTipoCapacitacion" value="#{formacionController.selected.idTipoCapacitacion}">
+                            <f:selectItems value="#{parametrosController.listTipoCapacitacion}"
+                                           var="tipoCapacitacion"
+                                           itemValue="#{tipoCapacitacion}" itemLabel="#{tipoCapacitacion.descripcion}" />
+                        </p:selectOneMenu>    
+                        
+                        <p:outputLabel value="Número de horas" for="maximoHoras" />
+                        <p:inputText id="maximoHoras" value="#{formacionController.selected.numeroHoras}" />
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{formacionController.update}" value="#{messages.Save}" update="display,:FormacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'FormacionEditDialog');"/>
+                    <p:commandButton value="#{messages.Cancel}" onclick="FormacionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

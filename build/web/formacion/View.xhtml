@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FormacionViewDlg" widgetVar="FormacionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.ViewFormacionTitle}">
+            <h:form id="FormacionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{formacionController.selected != null}">
+                        <h:outputText value="#{messages.ViewFormacionLabel_id}"/>
+                        <h:outputText value="#{formacionController.selected.id}" title="#{messages.ViewFormacionTitle_id}"/>
+                        <h:outputText value="#{messages.ViewFormacionLabel_nombre}"/>
+                        <h:outputText value="#{formacionController.selected.nombre}" title="#{messages.ViewFormacionTitle_nombre}"/>
+                        <h:outputText value="#{messages.ViewFormacionLabel_maximoParticipantes}"/>
+                        <h:outputText value="#{formacionController.selected.maximoParticipantes}" title="#{messages.ViewFormacionTitle_maximoParticipantes}"/>
+                        <h:outputText value="#{messages.ViewFormacionLabel_tipoFormacion}"/>
+                        <h:outputText value="#{formacionController.selected.tipoFormacion}" title="#{messages.ViewFormacionTitle_tipoFormacion}"/>
+                        <h:outputText value="#{messages.ViewFormacionLabel_tipoSala}"/>
+                        <h:outputText value="#{formacionController.selected.tipoSala}" title="#{messages.ViewFormacionTitle_tipoSala}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="FormacionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

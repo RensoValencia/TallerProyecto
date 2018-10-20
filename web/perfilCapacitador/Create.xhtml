@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PerfilCapacitadorCreateDlg" widgetVar="PerfilCapacitadorCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreatePerfilCapacitadorTitle}">
+            <h:form id="PerfilCapacitadorCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{perfilCapacitadorController.selected != null}">
+                        <p:outputLabel value="#{messages.CreatePerfilCapacitadorLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{perfilCapacitadorController.selected.nombre}" title="#{messages.CreatePerfilCapacitadorTitle_nombre}" required="true" requiredMessage="#{messages.CreatePerfilCapacitadorRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{messages.CreatePerfilCapacitadorLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{perfilCapacitadorController.selected.descripcion}" title="#{messages.CreatePerfilCapacitadorTitle_descripcion}" required="true" requiredMessage="#{messages.CreatePerfilCapacitadorRequiredMessage_descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{perfilCapacitadorController.create}" value="#{messages.Save}" update="display,:PerfilCapacitadorListForm:datalist,:growl" oncomplete="handleSubmit(args,'PerfilCapacitadorCreateDialog');"/>
+                    <p:commandButton value="#{messages.Cancel}" onclick="PerfilCapacitadorCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioViewDlg" widgetVar="UsuarioViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.ViewUsuarioTitle}">
+            <h:form id="UsuarioViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
+                        <h:outputText value="#{messages.ViewUsuarioLabel_id}"/>
+                        <h:outputText value="#{usuarioController.selected.id}" title="#{messages.ViewUsuarioTitle_id}"/>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_nombres}"/>
+                        <h:outputText value="#{usuarioController.selected.nombres}" title="#{messages.ViewUsuarioTitle_nombres}"/>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_apellidos}"/>
+                        <h:outputText value="#{usuarioController.selected.apellidos}" title="#{messages.ViewUsuarioTitle_apellidos}"/>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_fechaNacimiento}"/>
+                        <h:outputText value="#{usuarioController.selected.fechaNacimiento}" title="#{messages.ViewUsuarioTitle_fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_fechaAlta}"/>
+                        <h:outputText value="#{usuarioController.selected.fechaAlta}" title="#{messages.ViewUsuarioTitle_fechaAlta}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_fechaBaja}"/>
+                        <h:outputText value="#{usuarioController.selected.fechaBaja}" title="#{messages.ViewUsuarioTitle_fechaBaja}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_usuario}"/>
+                        <h:outputText value="#{usuarioController.selected.usuario}" title="#{messages.ViewUsuarioTitle_usuario}"/>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_clave}"/>
+                        <h:outputText value="#{usuarioController.selected.clave}" title="#{messages.ViewUsuarioTitle_clave}"/>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_fechaRegistro}"/>
+                        <h:outputText value="#{usuarioController.selected.fechaRegistro}" title="#{messages.ViewUsuarioTitle_fechaRegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_estado}"/>
+                        <h:outputText value="#{usuarioController.selected.estado}" title="#{messages.ViewUsuarioTitle_estado}"/>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_idArea}"/>
+                        <h:outputText value="#{usuarioController.selected.idArea}" title="#{messages.ViewUsuarioTitle_idArea}"/>
+                        <h:outputText value="#{messages.ViewUsuarioLabel_idPerfil}"/>
+                        <h:outputText value="#{usuarioController.selected.idPerfil}" title="#{messages.ViewUsuarioTitle_idPerfil}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="UsuarioViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

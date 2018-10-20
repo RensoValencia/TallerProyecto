@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RecursoCapacitacionViewDlg" widgetVar="RecursoCapacitacionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.ViewRecursoCapacitacionTitle}">
+            <h:form id="RecursoCapacitacionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{recursoCapacitacionController.selected != null}">
+                        <h:outputText value="#{messages.ViewRecursoCapacitacionLabel_id}"/>
+                        <h:outputText value="#{recursoCapacitacionController.selected.id}" title="#{messages.ViewRecursoCapacitacionTitle_id}"/>
+                        <h:outputText value="#{messages.ViewRecursoCapacitacionLabel_cantidad}"/>
+                        <h:outputText value="#{recursoCapacitacionController.selected.cantidad}" title="#{messages.ViewRecursoCapacitacionTitle_cantidad}"/>
+                        <h:outputText value="#{messages.ViewRecursoCapacitacionLabel_idMatEscritorio}"/>
+                        <h:outputText value="#{recursoCapacitacionController.selected.idMatEscritorio}" title="#{messages.ViewRecursoCapacitacionTitle_idMatEscritorio}"/>
+                        <h:outputText value="#{messages.ViewRecursoCapacitacionLabel_idPlanificacion}"/>
+                        <h:outputText value="#{recursoCapacitacionController.selected.idPlanificacion}" title="#{messages.ViewRecursoCapacitacionTitle_idPlanificacion}"/>
+                        <h:outputText value="#{messages.ViewRecursoCapacitacionLabel_idPerfilCapa}"/>
+                        <h:outputText value="#{recursoCapacitacionController.selected.idPerfilCapa}" title="#{messages.ViewRecursoCapacitacionTitle_idPerfilCapa}"/>
+                        <h:outputText value="#{messages.ViewRecursoCapacitacionLabel_idTipoRecurso}"/>
+                        <h:outputText value="#{recursoCapacitacionController.selected.idTipoRecurso}" title="#{messages.ViewRecursoCapacitacionTitle_idTipoRecurso}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{messages.Close}" onclick="RecursoCapacitacionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

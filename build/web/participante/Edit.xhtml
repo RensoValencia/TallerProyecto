@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ParticipanteEditDlg" widgetVar="ParticipanteEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.EditParticipanteTitle}">
+            <h:form id="ParticipanteEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{participanteController.selected != null}">
+                        <p:outputLabel value="usuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{participanteController.selected.idUsuario}">
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuario" itemValue="#{usuario}" itemLabel="#{usuario.nombres}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Interno/Externo:" />
+                        <p:inputText id="idTipo" value="#{participanteController.selected.tipoParticipante}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{participanteController.update}" value="#{messages.Save}" update="display,:ParticipanteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ParticipanteEditDialog');"/>
+                    <p:commandButton value="#{messages.Cancel}" onclick="ParticipanteEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

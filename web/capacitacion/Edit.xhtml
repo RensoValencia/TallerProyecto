@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CapacitacionEditDlg" widgetVar="CapacitacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.EditCapacitacionTitle}">
+            <h:form id="CapacitacionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{capacitacionController.selected != null}">
+                        <p:outputLabel value="#{messages.EditCapacitacionLabel_fechaInicio}" for="fechaInicio" />
+                        <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{capacitacionController.selected.fechaInicio}" title="#{messages.EditCapacitacionTitle_fechaInicio}" required="true" requiredMessage="#{messages.EditCapacitacionRequiredMessage_fechaInicio}" showOn="button"/>
+                        <p:outputLabel value="#{messages.EditCapacitacionLabel_fechaFin}" for="fechaFin" />
+                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy" value="#{capacitacionController.selected.fechaFin}" title="#{messages.EditCapacitacionTitle_fechaFin}" required="true" requiredMessage="#{messages.EditCapacitacionRequiredMessage_fechaFin}" showOn="button"/>
+                        <p:outputLabel value="#{messages.EditCapacitacionLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{capacitacionController.selected.estado}" required="true" requiredMessage="#{messages.EditCapacitacionRequiredMessage_estado}">
+                            <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                            <f:selectItems value="#{parametrosController.itemsAvailableSelectOne}"
+                                           var="estadoItem"
+                                           itemValue="#{estadoItem}" itemLabel="#{estadoItem.descripcion}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{messages.EditCapacitacionLabel_idDetSol}" for="idDetSol" />
+                        <p:selectOneMenu id="idDetSol" value="#{capacitacionController.selected.idDetSol}" required="true" requiredMessage="#{messages.EditCapacitacionRequiredMessage_idDetSol}">
+                            <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                            <f:selectItems value="#{detalleSolicitudController.itemsAvailableSelectOne}"
+                                           var="idDetSolItem"
+                                           itemValue="#{idDetSolItem}" itemLabel="#{idDetSolItem.idFormacion.nombre}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{messages.EditCapacitacionLabel_idPlanCapacitacion}" for="idPlanCapacitacion" />
+                        <p:selectOneMenu id="idPlanCapacitacion" value="#{capacitacionController.selected.idPlanCapacitacion}" required="true" requiredMessage="#{messages.EditCapacitacionRequiredMessage_idPlanCapacitacion}">
+                            <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                            <f:selectItems value="#{planCapacitacionController.itemsAvailableSelectOne}"
+                                           var="idPlanCapacitacionItem"
+                                           itemValue="#{idPlanCapacitacionItem}" itemLabel="#{idPlanCapacitacionItem.periodo}" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{capacitacionController.update}" value="#{messages.Save}" update="display,:CapacitacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CapacitacionEditDialog');"/>
+                    <p:commandButton value="#{messages.Cancel}" onclick="CapacitacionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

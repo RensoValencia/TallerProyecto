@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Solicitudes de capacitación</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}" />
+    </h:head>
+    
+    <h:body>
+    <ui:composition template="../templateIndra.xhtml">
+        
+        <ui:define name="top">
+                <div style="text-align: left;color: white;font-size: 26px; display: inline">
+                <img src="../img/indra.png" width="150px"  alt=""/>
+            </div>
+            <div style="display: inline; float: right;">
+                <h:form>
+                    <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.nombres} #{plantillaBean.usuario.apellidos}</span>
+                    - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idArea.nombre}</span> - Ud. tiene el puesto - 
+                    <span style="color: palegreen">#{plantillaBean.usuario.idPerfil.nombre}</span></b> - 
+                    <p:commandLink action="/usuario/Login.xhtml" ajax="false"
+                                     actionListener="#{loginBean.cerrarSesion()}">
+                        <h:outputText value="Cerrar sesión" />
+                    </p:commandLink>
+                </h:form>
+            </div>
+            </ui:define>
+        
+        <ui:define name="content">
+            <h:form id="SolicitudCapacitacionListForm">
+                
+                <p:blockUI id="block" block="SolicitudCapacitacionListForm" widgetVar="wgvSolicitudCapacitacionListForm">
+                        <p:graphicImage url="../img/load.gif" />
+                </p:blockUI>
+                <p:fieldset legend="Solicitudes de capacitacion">
+                <p:panel>
+                    <p:dataTable id="datalist" value="#{solicitudCapacitacionController.items}" var="item"
+                                 selectionMode="single" selection="#{solicitudCapacitacionController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 reflow="true"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+                        <p:ajax event="rowSelect"   update="createButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton editButton deleteButton"/>
+                        <p:column headerText="Nro solicitud">
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column headerText="Fecha solicitud">
+                            <h:outputText value="#{item.fechaSolicitud}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Fecha atención">
+                            <h:outputText value="#{item.fechaAtenciondate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Observación" filterBy="#{item.observacion}">
+                            <h:outputText value="#{item.observacion}"/>
+                        </p:column>
+                        <p:column headerText="Estado" filterBy="#{item.estado.descripcion}">
+                            <h:outputText value="#{item.estado.descripcion}"/>
+                        </p:column>
+                        <p:column headerText="Area" filterBy="#{item.idArea.nombre}">
+                            <h:outputText value="#{item.idArea.nombre}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo"
+                                             onstart="PF('wgvSolicitudCapacitacionListForm').show()"
+                                             oncomplete="PF('wgvSolicitudCapacitacionListForm').hide()"
+                                             action="/actualizarPlanPlanificacion/CrearSolicitud.xhtml" />
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":SolicitudCapacitacionEditForm" oncomplete="PF('SolicitudCapacitacionEditDialog').show()" 
+                                             disabled="#{empty solicitudCapacitacionController.selected}"/>
+                            
+                            <p:commandButton id="deleteButton"
+                                             value="Eliminar"
+                                             icon="ui-icon-trash" 
+                                             onstart="PF('wgvSolicitudCapacitacionListForm').show();"
+                                             oncomplete="PF('wgvSolicitudCapacitacionListForm').hide();"
+                                             update=":growl,datalist" disabled="#{empty solicitudCapacitacionController.selected}"
+                                             action="#{solicitudCapacitacionController.destroy}">
+                                <p:confirm header="Mensaje de validacion" 
+                                           message="¿Estas seguro de eliminar el detalle de solicitud?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+                </p:fieldset>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define></ui:composition></h:body>
+
+</html>

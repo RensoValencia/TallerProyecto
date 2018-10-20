@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioEditDlg" widgetVar="UsuarioEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.EditUsuarioTitle}">
+            <h:form id="UsuarioEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{usuarioController.selected.nombres}" title="#{messages.EditUsuarioTitle_nombres}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_nombres}"/>
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{usuarioController.selected.apellidos}" title="#{messages.EditUsuarioTitle_apellidos}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_apellidos}"/>
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_fechaNacimiento}" for="fechaNacimiento" />
+                        <p:calendar id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{usuarioController.selected.fechaNacimiento}" title="#{messages.EditUsuarioTitle_fechaNacimiento}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_fechaNacimiento}" showOn="button"/>
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_fechaAlta}" for="fechaAlta" />
+                        <p:calendar id="fechaAlta" pattern="MM/dd/yyyy" value="#{usuarioController.selected.fechaAlta}" title="#{messages.EditUsuarioTitle_fechaAlta}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_fechaAlta}" showOn="button"/>
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_fechaBaja}" for="fechaBaja" />
+                        <p:calendar id="fechaBaja" pattern="MM/dd/yyyy" value="#{usuarioController.selected.fechaBaja}" title="#{messages.EditUsuarioTitle_fechaBaja}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_fechaBaja}" showOn="button"/>
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{usuarioController.selected.usuario}" title="#{messages.EditUsuarioTitle_usuario}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_usuario}"/>
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_clave}" for="clave" />
+                        <p:inputText id="clave" value="#{usuarioController.selected.clave}" title="#{messages.EditUsuarioTitle_clave}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_clave}"/>
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_fechaRegistro}" for="fechaRegistro" />
+                        <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy" value="#{usuarioController.selected.fechaRegistro}" title="#{messages.EditUsuarioTitle_fechaRegistro}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_fechaRegistro}" showOn="button"/>
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{usuarioController.selected.estado}" title="#{messages.EditUsuarioTitle_estado}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_estado}"/>
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_idArea}" for="idArea" />
+                        <p:selectOneMenu id="idArea" value="#{usuarioController.selected.idArea}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_idArea}">
+                            <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="idAreaItem"
+                                           itemValue="#{idAreaItem}" itemLabel="#{idAreaItem.nombre}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{messages.EditUsuarioLabel_idPerfil}" for="idPerfil" />
+                        <p:selectOneMenu id="idPerfil" value="#{usuarioController.selected.idPerfil}" required="true" requiredMessage="#{messages.EditUsuarioRequiredMessage_idPerfil}">
+                            <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                            <f:selectItems value="#{perfilController.itemsAvailableSelectOne}"
+                                           var="idPerfilItem"
+                                           itemValue="#{idPerfilItem}" itemLabel="#{idPerfilItem.nombre}" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.update}" value="#{messages.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuarioEditDialog');"/>
+                    <p:commandButton value="#{messages.Cancel}" onclick="UsuarioEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

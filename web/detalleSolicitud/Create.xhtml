@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetalleSolicitudCreateDlg" widgetVar="DetalleSolicitudCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{messages.CreateDetalleSolicitudTitle}">
+            <h:form id="DetalleSolicitudCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detalleSolicitudController.selected != null}">
+                        <p:outputLabel value="#{messages.CreateDetalleSolicitudLabel_idFormacion}" for="idFormacion" />
+                        <p:selectOneMenu id="idFormacion" value="#{detalleSolicitudController.selected.idFormacion}" required="true" requiredMessage="#{messages.EditDetalleSolicitudRequiredMessage_idFormacion}">
+                            <f:selectItems value="#{formacionController.itemsAvailableSelectOne}"
+                                           var="idFormacionItem"
+                                           itemValue="#{idFormacionItem}" itemLabel="#{idFormacionItem.nombre}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{messages.CreateDetalleSolicitudLabel_idSolCap}" for="idSolCap" />
+                        <p:selectOneMenu id="idSolCap" value="#{detalleSolicitudController.selected.idSolCap}" required="true" requiredMessage="#{messages.EditDetalleSolicitudRequiredMessage_idSolCap}">
+                            <f:selectItems value="#{solicitudCapacitacionController.itemsAvailableSelectOne}"
+                                           var="idSolCapItem"
+                                           itemValue="#{idSolCapItem}" itemLabel="#{idSolCapItem.observacion}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{messages.CreateDetalleSolicitudLabel_tipoCapacitacion}" for="tipoCapacitacion" />
+                        <p:selectOneMenu id="tipoCapacitacion" value="#{detalleSolicitudController.selected.tipoCapacitacion}" required="true" requiredMessage="#{messages.EditDetalleSolicitudRequiredMessage_tipoCapacitacion}">
+                            <f:selectItems value="#{parametrosController.itemsAvailableSelectOne}"
+                                           var="tipoCapacitacionItem"
+                                           itemValue="#{tipoCapacitacionItem}" itemLabel="#{tipoCapacitacionItem.descripcion}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{messages.CreateDetalleSolicitudLabel_nivel}" for="nivel" />
+                        <p:selectOneMenu id="nivel" value="#{detalleSolicitudController.selected.nivel}" required="true" requiredMessage="#{messages.EditDetalleSolicitudRequiredMessage_nivel}">
+                            <f:selectItems value="#{parametrosController.itemsAvailableSelectOne}"
+                                           var="nivelItem"
+                                           itemValue="#{nivelItem}" itemLabel="#{nivelItem.descripcion}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detalleSolicitudController.create}" value="#{messages.Save}" update="display,:DetalleSolicitudListForm:datalist,:growl" oncomplete="handleSubmit(args,'DetalleSolicitudCreateDialog');"/>
+                    <p:commandButton value="#{messages.Cancel}" onclick="DetalleSolicitudCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
