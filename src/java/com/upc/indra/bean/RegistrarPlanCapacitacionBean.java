@@ -135,7 +135,7 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
         listSolicitudCapacitacion = solicitudCapacitacionFacade.findByIdTipoPlanCapacitacionAndEstado(
                 constanteSingleton.getTipoPlanCapacitacionInterna(), constanteSingleton.getEstadoSolicitudCapacitacionPendiente());
         listPerfilCapacitador = perfilCapacitadorFacade.findAll();
-        tipoCapacitacion = constanteSingleton.getTipoCapacitacionEspecializacion();
+        tipoCapacitacion = constanteSingleton.getTipoModalidadEspecializacion();
         estadoPlanCapacitacion = constanteSingleton.getEstadoPlanCapacitacionPendiente();
     }
     
@@ -252,7 +252,7 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
         msg="";
         nombreBoton = "Guardar";
         for(Capacitacion ca: listCapacitacion) {
-            if(tipoCapacitacion.getId().compareTo(ca.getIdDetSol().getIdFormacion().getIdTipoCapacitacion().getId()) == 0) {
+            if(tipoCapacitacion.getId().compareTo(ca.getIdDetSol().getIdFormacion().getIdTipoModalidad().getId()) == 0) {
                 hayEspecializacion = true;
                 nombreBoton = "Siguiente";
                 msg="Ud. tiene cursos de especializacion en su plan.";

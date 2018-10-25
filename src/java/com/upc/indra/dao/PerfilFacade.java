@@ -1,6 +1,6 @@
 package com.upc.indra.dao;
 
-import com.upc.indra.be.Perfil;
+import com.upc.indra.be.Rol;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  * @date 24-abr-2018
  */
 @Stateless
-public class PerfilFacade extends AbstractFacade<Perfil> {
+public class PerfilFacade extends AbstractFacade<Rol> {
 
     @PersistenceContext(unitName = "TallerProyecto2PU")
     private EntityManager em;
@@ -21,7 +21,7 @@ public class PerfilFacade extends AbstractFacade<Perfil> {
     }
 
     public PerfilFacade() {
-        super(Perfil.class);
+        super(Rol.class);
     }
 
 }

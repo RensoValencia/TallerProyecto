@@ -34,9 +34,9 @@ import lombok.Setter;
     @NamedQuery(name = "Formacion.findAll", query = "SELECT f FROM Formacion f"),
     @NamedQuery(name = "Formacion.findById", query = "SELECT f FROM Formacion f WHERE f.id = :id"),
     @NamedQuery(name = "Formacion.findByIdArea", query = "SELECT f FROM Formacion f WHERE f.idArea.id = :idArea"),
-    @NamedQuery(name = "Formacion.findByIdAreaAndIdTipoFormacion", query = "SELECT f FROM Formacion f WHERE f.idArea.id = :idArea AND f.tipoFormacion.id = :idTipoFormacion"),
-    @NamedQuery(name = "Formacion.findByIdAreaAndIdTipoCapacitacion", query = "SELECT f FROM Formacion f WHERE f.idArea.id = :idArea AND f.idTipoCapacitacion.id = :idTipoCapacitacion"),
-    @NamedQuery(name = "Formacion.findByIdAreaIdTipoFormacionAndIdTipoCapacitacion", query = "SELECT f FROM Formacion f WHERE f.idArea.id = :idArea AND f.tipoFormacion.id = :idTipoFormacion AND f.idTipoCapacitacion.id = :idTipoCapacitacion"),
+    @NamedQuery(name = "Formacion.findByIdAreaAndIdTipoFormacion", query = "SELECT f FROM Formacion f WHERE f.idArea.id = :idArea AND f.idTipoFormacion.id = :idTipoFormacion"),
+    @NamedQuery(name = "Formacion.findByIdAreaAndIdTipoModalidad", query = "SELECT f FROM Formacion f WHERE f.idArea.id = :idArea AND f.idTipoModalidad.id = :idTipoModalidad"),
+    @NamedQuery(name = "Formacion.findByIdAreaIdTipoFormacionAndIdTipoModalidad", query = "SELECT f FROM Formacion f WHERE f.idArea.id = :idArea AND f.idTipoFormacion.id = :idTipoFormacion AND f.idTipoModalidad.id = :idTipoModalidad"),
     @NamedQuery(name = "Formacion.findByNombre", query = "SELECT f FROM Formacion f WHERE f.nombre = :nombre"),
     @NamedQuery(name = "Formacion.findByMaximoParticipantes", query = "SELECT f FROM Formacion f WHERE f.maximoParticipantes = :maximoParticipantes")})
 public class Formacion implements Serializable {
@@ -57,9 +57,10 @@ public class Formacion implements Serializable {
     @Column(name = "MAXIMO_PARTICIPANTES")
     private int maximoParticipantes;
     
-    @JoinColumn(name = "TIPO_FORMACION", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_TIPO_FORMACION", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Parametros tipoFormacion;
+    private Parametros idTipoFormacion;
+    
     @JoinColumn(name = "TIPO_SALA", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Parametros tipoSala;
@@ -73,9 +74,9 @@ public class Formacion implements Serializable {
     @Column(name = "NUMERO_HORAS")
     @Getter @Setter private int numeroHoras;
     
-    @JoinColumn(name = "ID_TIPO_CAPACITACION", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_TIPO_MODALIDAD", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @Getter @Setter private Parametros idTipoCapacitacion;
+    @Getter @Setter private Parametros idTipoModalidad;
 
     public Formacion() {
     }
@@ -114,12 +115,12 @@ public class Formacion implements Serializable {
         this.maximoParticipantes = maximoParticipantes;
     }
 
-    public Parametros getTipoFormacion() {
-        return tipoFormacion;
+    public Parametros getIdTipoFormacion() {
+        return idTipoFormacion;
     }
 
-    public void setTipoFormacion(Parametros tipoFormacion) {
-        this.tipoFormacion = tipoFormacion;
+    public void setIdTipoFormacion(Parametros idTipoFormacion) {
+        this.idTipoFormacion = idTipoFormacion;
     }
 
     public Parametros getTipoSala() {

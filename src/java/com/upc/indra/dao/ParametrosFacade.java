@@ -28,6 +28,22 @@ public class ParametrosFacade extends AbstractFacade<Parametros> {
         super(Parametros.class);
     }
     
+    public Parametros findById(Integer id) {
+    
+        Parametros parametros = null;
+        try {
+            Query query = em.createNamedQuery("Parametros.findById");
+            query.setParameter("id", id);
+            
+            parametros = (Parametros) query.getSingleResult();
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+            parametros = null;
+        }
+        return parametros;
+    }
+    
     public List<Parametros> findByGrupo(Integer grupo) {
         List<Parametros> listParametros = null;
         try {

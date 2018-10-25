@@ -40,7 +40,6 @@ public class SolicitudCapacitacionController implements Serializable {
     public void init() {
         usuarioLogueado = (Usuario) ControladorAbstracto.getSessionProperty("user");
         fechaActual = new Date();
-        System.out.println("usuarioLogueado: " + usuarioLogueado.getIdArea().getId());
     }
     
     public SolicitudCapacitacionController() {
@@ -92,7 +91,7 @@ public class SolicitudCapacitacionController implements Serializable {
     public List<SolicitudCapacitacion> getItems() {
         //if (items == null) {
             
-            items = getFacade().findListByArea(usuarioLogueado.getIdArea());
+            //items = getFacade().findListByArea(usuarioLogueado.getIdArea());
             List<SolicitudCapacitacion> elimi = new ArrayList<>();
             for(SolicitudCapacitacion ssss: items) {
                 if(ssss.getFechaSolicitud().getYear() != fechaActual.getYear()) {

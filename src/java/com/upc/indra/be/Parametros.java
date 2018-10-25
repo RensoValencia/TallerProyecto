@@ -61,7 +61,7 @@ public class Parametros implements Serializable {
     private List<Capacitacion> capacitacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estado", fetch = FetchType.LAZY)
     private List<SolicitudCapacitacion> solicitudCapacitacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoFormacion", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoFormacion", fetch = FetchType.LAZY)
     private List<Formacion> formacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoSala", fetch = FetchType.LAZY)
     private List<Formacion> formacionList1;

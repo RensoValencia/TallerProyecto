@@ -21,9 +21,9 @@
             </div>
             <div style="display: inline; float: right;">
                 <h:form>
-                    <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.nombres} #{plantillaBean.usuario.apellidos}</span>
-                    - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idArea.nombre}</span> - Ud. tiene el puesto - 
-                    <span style="color: palegreen">#{plantillaBean.usuario.idPerfil.nombre}</span></b> - 
+                    <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
+                        - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
+                        <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
                     <p:commandLink action="/usuario/Login.xhtml" ajax="false"
                                      actionListener="#{loginBean.cerrarSesion()}">
                         <h:outputText value="Cerrar sesión" />
@@ -69,7 +69,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{messages.ListFormacionTitle_tipoFormacion}"/>
                             </f:facet>
-                            <h:outputText value="#{item.tipoFormacion.descripcion}"/>
+                            <h:outputText value="#{item.idTipoFormacion.descripcion}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -81,7 +81,7 @@
                             <h:outputText value="#{item.idArea.nombre}"/>
                         </p:column>
                         <p:column headerText="Tipo capacitación">
-                            <h:outputText value="#{item.idTipoCapacitacion.descripcion}"/>
+                            <h:outputText value="#{item.idTipoModalidad.descripcion}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{formacionController.prepareCreate}" update=":FormacionCreateForm" oncomplete="PF('FormacionCreateDialog').show()"/>

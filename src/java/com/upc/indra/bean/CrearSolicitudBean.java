@@ -41,9 +41,12 @@ import lombok.Setter;
 @ViewScoped
 public class CrearSolicitudBean implements Serializable{
 
+    @Getter @Setter private Integer anioSeleccionado;
     @Getter @Setter private Parametros tipoCapacitacionSeleccionada;
-    @Getter @Setter private Parametros tipoFormacionSeleccionada;
+    @Getter @Setter private Parametros estadoSolicitudCapacitacion;
+    @Getter @Setter private Parametros tipoModalidadSeleccionada;
     @Getter @Setter private Formacion formacionSeleccionada;
+    @Getter @Setter private Parametros tipoFormacionSeleccionada;
     @Getter @Setter private List<Parametros> listTipoCapacitacion; 
     @Getter @Setter private List<Parametros> listTipoFormacion; 
     @Getter @Setter private List<Formacion> listFormacion; 
@@ -78,18 +81,18 @@ public class CrearSolicitudBean implements Serializable{
         listDetalleSolicitud = new ArrayList<>();
         listParticipanteTemp = new ArrayList<>();
         listTipoCapacitacion = parametrosFacade.findByGrupo(GrupoParametrosEnum.TIPO_PLAN_PLANIFICACION.getValue());
-        listTipoFormacion = parametrosFacade.findByGrupo(GrupoParametrosEnum.TIPO_FORMACION.getValue());
+        //listTipoFormacion = parametrosFacade.findByGrupo(GrupoParametrosEnum.TIPO_FORMACION.getValue());
         estadoPendienteSolicitudCapacitacion = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.ESTADO_SOLICITUD_CAPACITACION.getValue(), 
                 EstadoSolicitudCapacitacionEnum.PENDIENTE.getValue());
         usuarioLogueado = (Usuario) ControladorAbstracto.getSessionProperty("user");
         
-        if(usuarioLogueado.getIdArea().getId().compareTo(Constante.ID_MARKETING) == 0) {
-            listFormacion = formacionFacade.findByIdAreaAndIdTipoCapacitacion(usuarioLogueado.getIdArea().getId(), 
-                    constanteSingleton.getTipoCapacitacionEspecializacion().getId());
+        if(usuarioLogueado.getIdEmpleado().getIdRol().getNivel().compareTo(Constante.ID_MARKETING) == 0) {
+            listFormacion = null; /*formacionFacade.findByIdAreaAndIdTipoCapacitacion(usuarioLogueado.getIdArea().getId(), 
+                    constanteSingleton.getTipoCapacitacionEspecializacion().getId());*/
             tipoCapacitacionSeleccionada = constanteSingleton.getTipoPlanCapacitacionExterna();
         } else {
             tipoCapacitacionSeleccionada = constanteSingleton.getTipoPlanCapacitacionInterna();
-            listFormacion = formacionFacade.findByIdArea(usuarioLogueado.getIdArea().getId());
+            listFormacion = null;/*formacionFacade.findByIdArea(usuarioLogueado.getIdArea().getId());*/
             for(Parametros p: listTipoCapacitacion) {
                 if(p.getId().compareTo(constanteSingleton.getTipoPlanCapacitacionExterna().getId()) == 0) {
                     p.setFlgEstado(true);
@@ -100,35 +103,112 @@ public class CrearSolicitudBean implements Serializable{
         }
     }
     
-    public void buscarCurso() {
-        if(tipoCapacitacionSeleccionada.getId().compareTo(constanteSingleton.getTipoPlanCapacitacionInterna().getId()) == 0) {
-            listFormacion = formacionFacade.findByIdAreaAndIdTipoFormacion(usuarioLogueado.getIdArea().getId(), 
-                tipoFormacionSeleccionada.getId());
-        } else {
-            listFormacion = formacionFacade.findByIdAreaIdTipoFormacionAndIdTipoCapacitacion(usuarioLogueado.getIdArea().getId(), 
-                tipoFormacionSeleccionada.getId(), constanteSingleton.getTipoCapacitacionEspecializacion().getId());
+    public void buscarSolicitudCapacitacion() {
+        
+    }
+    
+    public void buscarFormacion() {
+        
+        System.out.println("mensaje 1111");
+        System.out.println("555: " + usuarioLogueado.getIdEmpleado().getIdRol().getIdArea().getId());
+        System.out.println("666: " + tipoFormacionSeleccionada.getId());
+        System.out.println("777: " + tipoModalidadSeleccionada.getId());
+    
+        listFormacion = formacionFacade.findByIdAreaIdTipoFormacionAndIdTipoModalidad(
+                usuarioLogueado.getIdEmpleado().getIdRol().getIdArea().getId(), 
+                tipoFormacionSeleccionada.getId(), 
+                tipoModalidadSeleccionada.getId());
+        
+        
+        
+    }
+    
+    public void buscarTipoFormacionYCurso() {
+        
+        List<Parametros> listadoFormacion = new ArrayList<>();
+        
+        System.out.println("tipoModalidadSeleccionada.getId(): " + tipoModalidadSeleccionada.getId());
+        System.out.println("usuarioLogueado.getIdEmpleado().getIdRol().getIdArea().getId(): " + usuarioLogueado.getIdEmpleado().getIdRol().getIdArea().getId());
+        System.out.println("constanteSingleton.getTipoModalidadCorrectivo().getId(): " + constanteSingleton.getTipoModalidadCorrectivo().getId());
+        System.out.println("constanteSingleton.getTipoModalidadEspecializacion().getId(): " + constanteSingleton.getTipoModalidadEspecializacion().getId());
+        System.out.println("constanteSingleton.getTipoModalidadInductivo(): " + constanteSingleton.getTipoModalidadInductivo());
+        
+        if(constanteSingleton.getTipoModalidadEspecializacion().getId().compareTo(tipoModalidadSeleccionada.getId()) == 0) {
+            listadoFormacion.add(parametrosFacade.findById(constanteSingleton.getTipoFormacionCurso().getId()));
+            listTipoFormacion = listadoFormacion;
+            listFormacion = formacionFacade.findByIdAreaIdTipoFormacionAndIdTipoModalidad(
+                    usuarioLogueado.getIdEmpleado().getIdRol().getIdArea().getId(), 
+                    constanteSingleton.getTipoFormacionCurso().getId(),
+                    tipoModalidadSeleccionada.getId());
+                    
+        } else if(constanteSingleton.getTipoModalidadCorrectivo().getId().compareTo(tipoModalidadSeleccionada.getId()) == 0) {
+            listTipoFormacion = parametrosFacade.findByGrupo(GrupoParametrosEnum.TIPO_FORMACION.getValue());
+            listFormacion = new ArrayList<>();
+        } else if(constanteSingleton.getTipoModalidadInductivo().getId().compareTo(
+                tipoModalidadSeleccionada.getId()) == 0) {
+            System.out.println("constanteSingleton.getTipoFormacionTaller().getId() INDUCTIVO: " + constanteSingleton.getTipoFormacionTaller().getId());
+            listadoFormacion.add(parametrosFacade.findById(constanteSingleton.getTipoFormacionTaller().getId()));
+            System.out.println("listadoFormacion(0)" + listadoFormacion.get(0));
+            listTipoFormacion = listadoFormacion;
+            
+            System.out.println("111: " + usuarioLogueado.getIdEmpleado().getIdRol().getIdArea().getId());
+            System.out.println("222: " + constanteSingleton.getTipoFormacionTaller().getId());
+            System.out.println("333: " + tipoModalidadSeleccionada.getId());
+            listFormacion = formacionFacade.findByIdAreaIdTipoFormacionAndIdTipoModalidad(
+                    usuarioLogueado.getIdEmpleado().getIdRol().getIdArea().getId(), 
+                    constanteSingleton.getTipoFormacionTaller().getId(),
+                    tipoModalidadSeleccionada.getId()); 
         }
+        
+        /*
+        if(tipoCapacitacionSeleccionada.getId().compareTo(constanteSingleton.getTipoPlanCapacitacionInterna().getId()) == 0) {
+            //listFormacion = formacionFacade.findByIdAreaAndIdTipoFormacion(usuarioLogueado.getIdArea().getId(), 
+               // tipoFormacionSeleccionada.getId());
+        } else {
+            //listFormacion = formacionFacade.findByIdAreaIdTipoFormacionAndIdTipoCapacitacion(usuarioLogueado.getIdArea().getId(), 
+              //  tipoFormacionSeleccionada.getId(), constanteSingleton.getTipoCapacitacionEspecializacion().getId());
+        }*/
     }
     
     public void agregarCurso() {
      
+        if(null == tipoModalidadSeleccionada) {
+            JsfUtil.addErrorMessage("Por favor, Ud. debe seleccionar el tipo de modalidad.");     
+            return;
+        }
+        
+        if(null == tipoFormacionSeleccionada) {
+            JsfUtil.addErrorMessage("Por favor, Ud. debe seleccionar el tipo de formacion.");     
+            return;
+        }
+        
         if(null == formacionSeleccionada) {
-            JsfUtil.addErrorMessage("Por favor, Ud. debe seleccionar una formación.");     
+            JsfUtil.addErrorMessage("Por favor, Ud. debe seleccionar la formacion.");     
             return;
         }
         
         if(null == soliCap.getId()) {
-            soliCap.setIdTipoPlanCapacitacion(tipoCapacitacionSeleccionada);
+            
+            Parametros tipoCapacitacion = null;
+            
+            if(constanteSingleton.getTipoModalidadEspecializacion().getId().compareTo(tipoModalidadSeleccionada.getId()) == 0) {
+                tipoCapacitacion = constanteSingleton.getTipoPlanCapacitacionExterna();
+            } else {
+                tipoCapacitacion = constanteSingleton.getTipoPlanCapacitacionInterna();
+            }
+            
+            soliCap.setIdTipoCapacitacion(tipoCapacitacion);
             soliCap.setObservacion("Se creo la solicitud capacitacion");
-            soliCap.setFechaSolicitud(new Date());
-            soliCap.setIdArea(usuarioLogueado.getIdArea());
-            soliCap.setEstado(new Parametros(new Integer("35")));
+            soliCap.setIdArea(usuarioLogueado.getIdEmpleado().getIdRol().getIdArea()); 
+            soliCap.setEstado(constanteSingleton.getEstadoSolicitudCapacitacionPendiente());
             
             ds = new DetalleSolicitud();
             ds.setIdFormacion(formacionSeleccionada);
             ds.setIdSolCap(soliCap);
             
-            solicitudCapacitacionFacade.guardarSolicitud(soliCap, ds); 
+            solicitudCapacitacionFacade.guardarSolicitud(soliCap, ds);
+            agregarListadoParticipantes(ds);
+            
         } else {
             listDetalleSolicitud = detalleSolicitudFacade.findBySolCap(soliCap);
         
@@ -154,7 +234,7 @@ public class CrearSolicitudBean implements Serializable{
         
         JsfUtil.addSuccessMessage("Se ha grabado satisfactoriamente el detalle de la solicitud.");
         listDetalleSolicitud = detalleSolicitudFacade.findBySolCap(soliCap);
-        ControladorAbstracto.updateComponent("frmCrearSolicitud:dtListDetalleSolicitud");
+        ControladorAbstracto.updateComponent("frmCrearSolicitudCapacitacion:dtListDetalleSolicitud");
     }
     
     public void eliminarCurso(DetalleSolicitud ds) {
@@ -175,25 +255,17 @@ public class CrearSolicitudBean implements Serializable{
     }
     
     public void agregarListadoParticipantes(DetalleSolicitud ds) {
-    
-        /*if(constanteSingleton.getTipoCapacitacionEspecializacion().getId().compareTo(
-                ds.getIdFormacion().getIdTipoCapacitacion().getId()) == 0 && 
-                usuarioLogueado.getIdArea().getId().compareTo(Constante.ID_MARKETING) != 0) { 
-            JsfUtil.addErrorMessage("Por favor, Ud. solo puede asociar participantes a las capacitaciones que no sean especilización.");
-            return;
-        }*/
         
         detalleSolicitudSeleccionada = ds; 
         listParticipante = detSolParticipanteFacade.findByDetSol(detalleSolicitudSeleccionada);
         
         ControladorAbstracto.updateComponent("frmListadoParticipante:dtListadoParticipante");
-        ControladorAbstracto.executeJavascript("PF('wgvDlgSeleccionarParticipantes').show();");
     }
     
     public void agregarListadoParticipantes2() {
         
         List<Participante> eliminarTodo = new ArrayList<>();
-        listParticipanteArea = participanteFacade.findByIdArea(usuarioLogueado.getIdArea().getId());
+        listParticipanteArea = participanteFacade.findByIdArea(usuarioLogueado.getIdEmpleado().getIdRol().getIdArea().getId());
         listParticipante = detSolParticipanteFacade.findByDetSol(detalleSolicitudSeleccionada);
         for(Participante par1: listParticipanteArea) {
             for(DetSolParticipante det11: listParticipante) {
@@ -238,12 +310,13 @@ public class CrearSolicitudBean implements Serializable{
         }
          
         detSolParticipanteFacade.guardar(detalleSolicitudSeleccionada, listParticipanteTemp);
+        agregarListadoParticipantes(detalleSolicitudSeleccionada);
         listParticipanteTemp = new ArrayList<>();
         listDetalleSolicitud = detalleSolicitudFacade.findBySolCap(soliCap);
         
         JsfUtil.addErrorMessage("Se agregaron satisfactoriamente a los participantes.");
-        ControladorAbstracto.updateComponent("frmCrearSolicitud:dtListDetalleSolicitud"); 
-        ControladorAbstracto.executeJavascript("PF('wgvDlgSeleccionarParticipantes').hide();");
+        ControladorAbstracto.updateComponent("frmCrearSolicitudCapacitacion:dtListDetalleSolicitud"); 
+        ControladorAbstracto.updateComponent("frmListadoParticipante:dtListadoParticipante"); 
         ControladorAbstracto.executeJavascript("PF('wgvDlgSeleccionarParticipantesSeleccionar').hide();");
     }
     

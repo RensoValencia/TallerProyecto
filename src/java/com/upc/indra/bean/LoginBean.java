@@ -35,18 +35,18 @@ public class LoginBean implements Serializable{
     
         String redireccion = "";
         
-        if(usuario.getUsuario() == null || usuario.getUsuario().equals("")) {
+        if(usuario.getNombre() == null || usuario.getNombre().equals("")) {
             JsfUtil.addErrorMessage("Por favor ingrese su usuario.");
         } else if(usuario.getClave() == null && usuario.getClave().equals("")) {
             JsfUtil.addErrorMessage("Por favor ingrese su clave.");
         } else {
-            Usuario user = usuarioFacade.findByUserAndPass(usuario.getUsuario(), usuario.getClave());
+            Usuario user = usuarioFacade.findByUserAndPass(usuario.getNombre(), usuario.getClave());
         
             if(null != user) {
                 ControladorAbstracto.setSessionProperty("user", user);
-                if(user.getIdArea().getId().compareTo(new Integer("8")) == 0) {//RR.HH
+                if(user.getIdEmpleado().getIdRol().getNivel().compareTo(new Integer("2")) == 0) {//RR.HH
                     redireccion = "/faces/actualizarPlanPlanificacion/ListadoPlanCapacitacion";
-                } else if(user.getIdArea().getId().compareTo(new Integer("2")) == 0) {//SISTEMAS
+                } else if(user.getIdEmpleado().getIdRol().getNivel().compareTo(new Integer("3")) == 0) {//SISTEMAS
                     redireccion = "/faces/usuario/List";
                 } else {//otras areas
                     redireccion = "/actualizarPlanPlanificacion/SolicitudesCapacitacion";

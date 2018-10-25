@@ -17,7 +17,7 @@
                         <p:outputLabel value="#{messages.CreateFormacionLabel_maximoParticipantes}" for="maximoParticipantes" />
                         <p:inputText id="maximoParticipantes" value="#{formacionController.selected.maximoParticipantes}" title="#{messages.CreateFormacionTitle_maximoParticipantes}" required="true" requiredMessage="#{messages.CreateFormacionRequiredMessage_maximoParticipantes}"/>
                         <p:outputLabel value="#{messages.CreateFormacionLabel_tipoFormacion}" for="tipoFormacion" />
-                        <p:selectOneMenu id="tipoFormacion" value="#{formacionController.selected.tipoFormacion}" required="true" requiredMessage="#{messages.EditFormacionRequiredMessage_tipoFormacion}">
+                        <p:selectOneMenu id="tipoFormacion" value="#{formacionController.selected.idTipoFormacion}" required="true" requiredMessage="#{messages.EditFormacionRequiredMessage_tipoFormacion}">
                             <f:selectItems value="#{parametrosController.listTipoFormacion}"
                                            var="tipoFormacionItem"
                                            itemValue="#{tipoFormacionItem}" itemLabel="#{tipoFormacionItem.descripcion}"/>
@@ -37,8 +37,8 @@
                         </p:selectOneMenu>    
                         
                         <p:outputLabel value="Tipo capacitación" for="idTipoCapacitacion" />
-                        <p:selectOneMenu id="idTipoCapacitacion" value="#{formacionController.selected.idTipoCapacitacion}">
-                            <f:selectItems value="#{parametrosController.listTipoCapacitacion}"
+                        <p:selectOneMenu id="idTipoCapacitacion" value="#{formacionController.selected.idTipoModalidad}">
+                            <f:selectItems value="#{parametrosController.listTipoModalidad}"
                                            var="tipoCapacitacion"
                                            itemValue="#{tipoCapacitacion}" itemLabel="#{tipoCapacitacion.descripcion}" />
                         </p:selectOneMenu>   

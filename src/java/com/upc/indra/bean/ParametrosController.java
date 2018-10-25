@@ -122,12 +122,12 @@ public class ParametrosController implements Serializable {
         return getFacade().findAll();
     }
     
-    public List<Parametros> getEstadoSolicitud() {
+    public List<Parametros> getListEstadoSolicitud() {
         return getFacade().findByGrupo(GrupoParametrosEnum.ESTADO_SOLICITUD_CAPACITACION.getValue());
     }
     
-    public List<Parametros> getListTipoCapacitacion() {
-        return getFacade().findByGrupo(GrupoParametrosEnum.TIPO_CAPACITACION.getValue());
+    public List<Parametros> getListTipoModalidad() {
+        return getFacade().findByGrupo(GrupoParametrosEnum.TIPO_MODALIDAD.getValue());
     }
     
     public List<Parametros> getListTipoFormacion() {

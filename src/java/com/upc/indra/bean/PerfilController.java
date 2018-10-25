@@ -1,6 +1,6 @@
 package com.upc.indra.bean;
 
-import com.upc.indra.be.Perfil;
+import com.upc.indra.be.Rol;
 import com.upc.indra.bean.util.JsfUtil;
 import com.upc.indra.bean.util.JsfUtil.PersistAction;
 import com.upc.indra.dao.PerfilFacade;
@@ -25,17 +25,17 @@ public class PerfilController implements Serializable {
 
     @EJB
     private com.upc.indra.dao.PerfilFacade ejbFacade;
-    private List<Perfil> items = null;
-    private Perfil selected;
+    private List<Rol> items = null;
+    private Rol selected;
 
     public PerfilController() {
     }
 
-    public Perfil getSelected() {
+    public Rol getSelected() {
         return selected;
     }
 
-    public void setSelected(Perfil selected) {
+    public void setSelected(Rol selected) {
         this.selected = selected;
     }
 
@@ -49,8 +49,8 @@ public class PerfilController implements Serializable {
         return ejbFacade;
     }
 
-    public Perfil prepareCreate() {
-        selected = new Perfil();
+    public Rol prepareCreate() {
+        selected = new Rol();
         initializeEmbeddableKey();
         return selected;
     }
@@ -74,7 +74,7 @@ public class PerfilController implements Serializable {
         }
     }
 
-    public List<Perfil> getItems() {
+    public List<Rol> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -109,19 +109,19 @@ public class PerfilController implements Serializable {
         }
     }
 
-    public Perfil getPerfil(java.lang.Integer id) {
+    public Rol getPerfil(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<Perfil> getItemsAvailableSelectMany() {
+    public List<Rol> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Perfil> getItemsAvailableSelectOne() {
+    public List<Rol> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Perfil.class)
+    @FacesConverter(forClass = Rol.class)
     public static class PerfilControllerConverter implements Converter {
 
         @Override
@@ -151,11 +151,11 @@ public class PerfilController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Perfil) {
-                Perfil o = (Perfil) object;
+            if (object instanceof Rol) {
+                Rol o = (Rol) object;
                 return getStringKey(o.getId());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Perfil.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Rol.class.getName()});
                 return null;
             }
         }

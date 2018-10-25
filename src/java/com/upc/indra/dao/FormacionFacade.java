@@ -58,12 +58,12 @@ public class FormacionFacade extends AbstractFacade<Formacion> {
         return listParametros;
     }
 
-    public List<Formacion> findByIdAreaAndIdTipoCapacitacion(Integer idArea, Integer idTipoCapacitacion) {
+    public List<Formacion> findByIdAreaAndIdTipoModalidad(Integer idArea, Integer idTipoModalidad) {
         List<Formacion> listParametros = null;
         try {
-            Query query = em.createNamedQuery("Formacion.findByIdAreaAndIdTipoCapacitacion");
+            Query query = em.createNamedQuery("Formacion.findByIdAreaAndIdTipoModalidad");
             query.setParameter("idArea", idArea);
-            query.setParameter("idTipoCapacitacion", idTipoCapacitacion);
+            query.setParameter("idTipoModalidad", idTipoModalidad);
             
             listParametros = query.getResultList();
             
@@ -74,13 +74,13 @@ public class FormacionFacade extends AbstractFacade<Formacion> {
         return listParametros;
     }
     
-    public List<Formacion> findByIdAreaIdTipoFormacionAndIdTipoCapacitacion(Integer idArea, Integer idTipoFormacion, Integer idTipoCapacitacion) {
+    public List<Formacion> findByIdAreaIdTipoFormacionAndIdTipoModalidad(Integer idArea, Integer idTipoFormacion, Integer idTipoModalidad) {
         List<Formacion> listParametros = null;
         try {
-            Query query = em.createNamedQuery("Formacion.findByIdAreaIdTipoFormacionAndIdTipoCapacitacion");
+            Query query = em.createNamedQuery("Formacion.findByIdAreaIdTipoFormacionAndIdTipoModalidad");
             query.setParameter("idArea", idArea);
             query.setParameter("idTipoFormacion", idTipoFormacion);
-            query.setParameter("idTipoCapacitacion", idTipoCapacitacion);
+            query.setParameter("idTipoModalidad", idTipoModalidad);
             
             listParametros = query.getResultList();
             

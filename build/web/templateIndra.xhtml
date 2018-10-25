@@ -27,12 +27,12 @@
                 <ui:insert name="left">
                 <h:form>
                     <c:choose>
-                    <c:when test="#{user.idArea.id eq 2}">
-                    <p>
-                        <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/CrearSolicitud.xhtml">
-                            <h:outputText  value="Nueva Solicitud de Capacitación" />
-                        </p:commandLink>   
-                    </p>
+                    <c:when test="#{user.idEmpleado.idRol.nivel eq 3}">
+                        <p>
+                            <p:commandLink ajax="false" action="/actualizarSolicitudCapacitacion/frmListadoSolicitudCapacitacion.xhtml">
+                                <h:outputText value="Solicitudes de capacitación" />
+                            </p:commandLink>   
+                        </p>
                     
                         <p>
                             <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/SolicitudesCapacitacion.xhtml">
@@ -130,7 +130,7 @@
                     </p:commandLink>   
                     </p>
                     </c:when>
-                        <c:when test="#{user.idArea.id eq 8}">
+                        <c:when test="#{user.idEmpleado.idRol.nivel eq 1}">
                             <p>
                             <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/ListadoPlanCapacitacion.xhtml">
                                 <h:outputText value="Planes de Capacitación" />
@@ -143,16 +143,16 @@
                         </p>
                         </c:when>
                         <c:otherwise>
-                                <p>
-                        <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/CrearSolicitud.xhtml">
-                            <h:outputText  value="Nueva Solicitud de Capacitación" />
-                        </p:commandLink>   
-                    </p>
-                        <p>
-                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/SolicitudesCapacitacion.xhtml">
-                                <h:outputText value="Actualizar Solicitud de Capacitación" />
+                            <p>
+                            <p:commandLink ajax="false" action="/actualizarSolicitudCapacitacion/frmListadoSolicitudCapacitacion.xhtml">
+                                <h:outputText value="Solicitudes de capacitación" />
                             </p:commandLink>   
                         </p>
+                            <p>
+                                <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/SolicitudesCapacitacion.xhtml">
+                                    <h:outputText value="Actualizar Solicitud de Capacitación" />
+                                </p:commandLink>   
+                            </p>
                         </c:otherwise>
                     </c:choose>
                     <p>Ayuda</p>

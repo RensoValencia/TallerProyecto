@@ -32,8 +32,8 @@ import lombok.Setter;
 @NamedQueries({
     @NamedQuery(name = "Capacitacion.findAll", query = "SELECT c FROM Capacitacion c"),
     @NamedQuery(name = "Capacitacion.findById", query = "SELECT c FROM Capacitacion c WHERE c.id = :id"),
-    @NamedQuery(name = "Capacitacion.findByIdEsp", query = "SELECT c FROM Capacitacion c WHERE c.idDetSol.idFormacion.tipoFormacion = :tipoFormacion"),
-    @NamedQuery(name = "Capacitacion.findByIdEsp1", query = "SELECT c FROM Capacitacion c WHERE c.idDetSol.idFormacion.idTipoCapacitacion = :tipoFormacion AND c.idPlanCapacitacion = :idPlan"),
+    @NamedQuery(name = "Capacitacion.findByIdEsp", query = "SELECT c FROM Capacitacion c WHERE c.idDetSol.idFormacion.idTipoFormacion = :tipoFormacion"),
+    @NamedQuery(name = "Capacitacion.findByIdEsp1", query = "SELECT c FROM Capacitacion c WHERE c.idDetSol.idFormacion.idTipoModalidad = :tipoFormacion AND c.idPlanCapacitacion = :idPlan"),
     @NamedQuery(name = "Capacitacion.findByIdPlanCapacitacion", query = "SELECT c FROM Capacitacion c WHERE c.idPlanCapacitacion = :planCapacitacion"),
     @NamedQuery(name = "Capacitacion.findByFechaInicio", query = "SELECT c FROM Capacitacion c WHERE c.fechaInicio = :fechaInicio"),
     @NamedQuery(name = "Capacitacion.findByFechaFin", query = "SELECT c FROM Capacitacion c WHERE c.fechaFin = :fechaFin")})

@@ -37,12 +37,12 @@ import lombok.Setter;
 @NamedQueries({
     @NamedQuery(name = "SolicitudCapacitacion.findAll", query = "SELECT s FROM SolicitudCapacitacion s"),
     @NamedQuery(name = "SolicitudCapacitacion.findListSolCapByEstado", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.estado = :estado ORDER BY s.id DESC"),
-    @NamedQuery(name = "SolicitudCapacitacion.findListByArea", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.idArea = :area ORDER BY s.fechaSolicitud DESC"),
+    @NamedQuery(name = "SolicitudCapacitacion.findListByArea", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.idArea = :area ORDER BY s.fechaDocumento DESC"),
     @NamedQuery(name = "SolicitudCapacitacion.findById", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.id = :id"),
-    @NamedQuery(name = "SolicitudCapacitacion.findByIdEstadoFechas", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.estado = :estado AND s.fechaSolicitud BETWEEN :fi AND :ff AND s.idTipoPlanCapacitacion = :aaa"),
-    @NamedQuery(name = "SolicitudCapacitacion.findByIdEstadoPeriodo", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.estado = :estado AND s.periodo = :periodo AND s.idTipoPlanCapacitacion = :aaa"),
-    @NamedQuery(name = "SolicitudCapacitacion.findByIdTipoPlanCapacitacionAndEstado", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.idTipoPlanCapacitacion = :idTipoPlanCapacitacion AND s.estado = :estado"),
-    @NamedQuery(name = "SolicitudCapacitacion.findByFechaSolicitud", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.fechaSolicitud = :fechaSolicitud"),})
+    @NamedQuery(name = "SolicitudCapacitacion.findByIdEstadoFechas", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.estado = :estado AND s.fechaDocumento BETWEEN :fi AND :ff AND s.idTipoCapacitacion = :aaa"),
+    @NamedQuery(name = "SolicitudCapacitacion.findByIdEstadoPeriodo", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.estado = :estado AND s.periodo = :periodo AND s.idTipoCapacitacion = :aaa"),
+    @NamedQuery(name = "SolicitudCapacitacion.findByIdTipoPlanCapacitacionAndEstado", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.idTipoCapacitacion = :idTipoPlanCapacitacion AND s.estado = :estado"),
+    @NamedQuery(name = "SolicitudCapacitacion.findByFechaSolicitud", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.fechaDocumento = :fechaDocumento"),})
 public class SolicitudCapacitacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,14 +53,14 @@ public class SolicitudCapacitacion implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FECHA_SOLICITUD")
+    @Column(name = "FECHA_DOCUMENTO")
     @Temporal(TemporalType.DATE)
-    private Date fechaSolicitud;
+    private Date fechaDocumento;
     
     @Basic(optional = false)
-    @Column(name = "FECHA_ATENCIONDATE")
+    @Column(name = "FECHA_ATENCION")
     @Temporal(TemporalType.DATE)
-    private Date fechaAtenciondate;
+    private Date fechaAtencion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -76,9 +76,9 @@ public class SolicitudCapacitacion implements Serializable {
     @Column(name = "PERIODO")
     @Getter @Setter private String periodo;
     
-    @JoinColumn(name = "ID_TIPO_PLAN_CAPACITACION", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_TIPO_CAPACITACION", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @Getter @Setter private Parametros idTipoPlanCapacitacion;
+    @Getter @Setter private Parametros idTipoCapacitacion;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolCap", fetch = FetchType.LAZY)
     private List<DetalleSolicitud> detalleSolicitudList;
@@ -92,10 +92,10 @@ public class SolicitudCapacitacion implements Serializable {
         this.id = id;
     }
 
-    public SolicitudCapacitacion(Integer id, Date fechaSolicitud, Date fechaAtenciondate, String observacion) {
+    public SolicitudCapacitacion(Integer id, Date fechaDocumento, Date fechaAtencion, String observacion) {
         this.id = id;
-        this.fechaSolicitud = fechaSolicitud;
-        this.fechaAtenciondate = fechaAtenciondate;
+        this.fechaDocumento = fechaDocumento;
+        this.fechaAtencion = fechaAtencion;
         this.observacion = observacion;
     }
 
@@ -107,20 +107,20 @@ public class SolicitudCapacitacion implements Serializable {
         this.id = id;
     }
 
-    public Date getFechaSolicitud() {
-        return fechaSolicitud;
+    public Date getFechaDocumento() {
+        return fechaDocumento;
     }
 
-    public void setFechaSolicitud(Date fechaSolicitud) {
-        this.fechaSolicitud = fechaSolicitud;
+    public void setFechaDocumento(Date fechaDocumento) {
+        this.fechaDocumento = fechaDocumento;
     }
 
-    public Date getFechaAtenciondate() {
-        return fechaAtenciondate;
+    public Date getFechaAtencion() {
+        return fechaAtencion;
     }
 
-    public void setFechaAtenciondate(Date fechaAtenciondate) {
-        this.fechaAtenciondate = fechaAtenciondate;
+    public void setFechaAtencion(Date fechaAtencion) {
+        this.fechaAtencion = fechaAtencion;
     }
 
     public String getObservacion() {

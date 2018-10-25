@@ -17,8 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author RENSO
@@ -30,15 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id"),
-    @NamedQuery(name = "Usuario.findByUserAndPass", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.clave = :clave"),
-    @NamedQuery(name = "Usuario.findByNombres", query = "SELECT u FROM Usuario u WHERE u.nombres = :nombres"),
-    @NamedQuery(name = "Usuario.findByApellidos", query = "SELECT u FROM Usuario u WHERE u.apellidos = :apellidos"),
-    @NamedQuery(name = "Usuario.findByFechaNacimiento", query = "SELECT u FROM Usuario u WHERE u.fechaNacimiento = :fechaNacimiento"),
-    @NamedQuery(name = "Usuario.findByFechaAlta", query = "SELECT u FROM Usuario u WHERE u.fechaAlta = :fechaAlta"),
-    @NamedQuery(name = "Usuario.findByFechaBaja", query = "SELECT u FROM Usuario u WHERE u.fechaBaja = :fechaBaja"),
-    @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario"),
-    @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave"),
-    @NamedQuery(name = "Usuario.findByFechaRegistro", query = "SELECT u FROM Usuario u WHERE u.fechaRegistro = :fechaRegistro"),
+    @NamedQuery(name = "Usuario.findByUserAndPass", query = "SELECT u FROM Usuario u WHERE u.nombre = :usuario AND u.clave = :clave"),
     @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado")})
 public class Usuario implements Serializable {
 
@@ -48,56 +41,35 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "NOMBRES")
-    private String nombres;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "APELLIDOS")
-    private String apellidos;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_NACIMIENTO")
-    @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_ALTA")
-    @Temporal(TemporalType.DATE)
-    private Date fechaAlta;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FECHA_BAJA")
-    @Temporal(TemporalType.DATE)
-    private Date fechaBaja;
-    @Basic(optional = false)
-    @NotNull
     
-    @Column(name = "USUARIO")
-    private String usuario;
+    @JoinColumn(name = "ID_EMPLEADO", referencedColumnName = "ID")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @Getter @Setter private Empleado idEmpleado;
+    
+    @NotNull
+    @Column(name = "NOMBRE")
+    @Getter @Setter private String nombre;
+    
     @Basic(optional = false)
     @NotNull
-    
     @Column(name = "CLAVE")
-    private String clave;
+    @Getter @Setter private String clave;
     @Basic(optional = false)
+    
     @NotNull
-    @Column(name = "FECHA_REGISTRO")
+    @Column(name = "FECHA_CREACION")
     @Temporal(TemporalType.DATE)
-    private Date fechaRegistro;
+    @Getter @Setter private Date fechaCreacion;
+    
+    @NotNull
+    @Column(name = "FECHA_CREACION_HORA")
+    @Temporal(TemporalType.TIME)
+    @Getter @Setter private Date fechaCreacionHora;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "ESTADO")
-    private Character estado;
-    @JoinColumn(name = "ID_AREA", referencedColumnName = "ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Area idArea;
-    @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Perfil idPerfil;
+    @Getter @Setter private Character estado;
 
     public Usuario() {
     }
@@ -106,16 +78,12 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Usuario(Integer id, String nombres, String apellidos, Date fechaNacimiento, Date fechaAlta, Date fechaBaja, String usuario, String clave, Date fechaRegistro, Character estado) {
+    public Usuario(Integer id, String nombre, String clave, Date fechaCreacion, Date fechaCreacionHora, Character estado) {
         this.id = id;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.fechaNacimiento = fechaNacimiento;
-        this.fechaAlta = fechaAlta;
-        this.fechaBaja = fechaBaja;
-        this.usuario = usuario;
+        this.nombre = nombre;
         this.clave = clave;
-        this.fechaRegistro = fechaRegistro;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaCreacionHora = fechaCreacionHora;
         this.estado = estado;
     }
 
@@ -125,94 +93,6 @@ public class Usuario implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public Date getFechaAlta() {
-        return fechaAlta;
-    }
-
-    public void setFechaAlta(Date fechaAlta) {
-        this.fechaAlta = fechaAlta;
-    }
-
-    public Date getFechaBaja() {
-        return fechaBaja;
-    }
-
-    public void setFechaBaja(Date fechaBaja) {
-        this.fechaBaja = fechaBaja;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    public Date getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(Date fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
-
-    public Character getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Character estado) {
-        this.estado = estado;
-    }
-
-    public Area getIdArea() {
-        return idArea;
-    }
-
-    public void setIdArea(Area idArea) {
-        this.idArea = idArea;
-    }
-
-    public Perfil getIdPerfil() {
-        return idPerfil;
-    }
-
-    public void setIdPerfil(Perfil idPerfil) {
-        this.idPerfil = idPerfil;
     }
 
     @Override

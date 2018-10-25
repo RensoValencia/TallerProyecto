@@ -46,10 +46,7 @@ public class Area implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "NOMBRE")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArea", fetch = FetchType.LAZY)
-    private List<SolicitudCapacitacion> solicitudCapacitacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArea", fetch = FetchType.LAZY)
-    private List<Usuario> usuarioList;
+    
 
     public Area() {
     }
@@ -77,24 +74,6 @@ public class Area implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    @XmlTransient
-    public List<SolicitudCapacitacion> getSolicitudCapacitacionList() {
-        return solicitudCapacitacionList;
-    }
-
-    public void setSolicitudCapacitacionList(List<SolicitudCapacitacion> solicitudCapacitacionList) {
-        this.solicitudCapacitacionList = solicitudCapacitacionList;
-    }
-
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
-
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
     }
 
     @Override
