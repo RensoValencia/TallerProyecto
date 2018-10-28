@@ -25,22 +25,27 @@
                 <ui:insert name="left">
                     <h:form>
                         <p>
-                    <p:commandLink action="/actualizarPlanPlanificacion/SolicitudesCapacitacion.xhtml">
-                        <h:outputText value="Solicitudes" />
-                    </p:commandLink>   
+                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmListadoPlanCapacitacion.xhtml">
+                                <h:outputText value="Planes de Capacitación" />
+                            </p:commandLink>   
                         </p>
-                        
                         <p>
-                        <p:commandLink action="/actualizarPlanPlanificacion/ListadoPlanCapacitacion.xhtml">
-                        <h:outputText value="Listado planes" />
-                    </p:commandLink>   
-                    </p>
-                    
-                    <p>
-                        <p:commandLink action="/actualizarPlanPlanificacion/RegistrarPlanCapacitacion.xhtml">
-                        <h:outputText value="Registro del plan" />
-                    </p:commandLink>   
-                    </p>
+                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/RegistrarPlanCapacitacion.xhtml">
+                                <h:outputText value="Nuevo plan de capacitación" />
+                            </p:commandLink>   
+                        </p>
+                        </c:when>
+                        <c:otherwise>
+                            <p>
+                            <p:commandLink ajax="false" action="/actualizarSolicitudCapacitacion/frmListadoSolicitudCapacitacion.xhtml">
+                                <h:outputText value="Solicitudes de capacitación" />
+                            </p:commandLink>   
+                        </p>
+                            <p>
+                                <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmListadoCapacitacion.xhtml">
+                                    <h:outputText value="Actualizar Solicitud de Capacitación" />
+                                </p:commandLink>   
+                            </p>
                     
                         <p>
                         <p:commandLink action="/area/List.xhtml">

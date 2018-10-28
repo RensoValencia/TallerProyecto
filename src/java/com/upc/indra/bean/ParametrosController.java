@@ -137,6 +137,14 @@ public class ParametrosController implements Serializable {
     public List<Parametros> getListTipoSala() {
         return getFacade().findByGrupo(GrupoParametrosEnum.TIPO_SALA.getValue());
     }
+    
+    public List<Parametros> getListTipoCapacitacion() {
+        return getFacade().findByGrupo(GrupoParametrosEnum.TIPO_PLAN_PLANIFICACION.getValue());
+    }
+    
+    public List<Parametros> getListEstadoTipoCapacitacion() {
+        return getFacade().findByGrupo(GrupoParametrosEnum.ESTADO_PLAN_CAPACITACION.getValue());
+    }
 
     @FacesConverter(forClass = Parametros.class)
     public static class ParametrosControllerConverter implements Converter {

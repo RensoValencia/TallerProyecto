@@ -14,26 +14,24 @@
     </h:head>
     <h:body>
         <ui:composition template="../templateIndra.xhtml">
-
             <ui:define name="top">
                 <div style="text-align: left;color: white;font-size: 26px; display: inline">
-                <img src="../img/indra.png" width="150px"  alt=""/>
-            </div>
-            <div style="display: inline; float: right;">
-                <h:form>
-                    <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
-                        - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
-                        <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
-                    <p:commandLink action="/usuario/Login.xhtml"
-                                     actionListener="#{loginBean.cerrarSesion()}">
-                        <h:outputText value="Cerrar sesión" />
-                    </p:commandLink>
-                </h:form>
-            </div>
+                    <img src="../img/indra.png" width="150px"  alt=""/>
+                </div>
+                <div style="display: inline; float: right;">
+                    <h:form>
+                        <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
+                            - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
+                            <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
+                        <p:commandLink action="/usuario/Login.xhtml"
+                                       actionListener="#{loginBean.cerrarSesion()}">
+                            <h:outputText value="Cerrar sesión" />
+                        </p:commandLink>
+                    </h:form>
+                </div>
             </ui:define>
             <ui:define name="content">
                 <h:form id="frmBuscarSolicitudCapacitacion">
-
                     <p:blockUI id="block" block="frmBuscarSolicitudCapacitacion" widgetVar="wgvFrmBuscarSolicitud">
                         <p:graphicImage url="../img/load.gif" />
                     </p:blockUI>
@@ -45,7 +43,8 @@
                             </p:column>
                             <p:column>
                                 <!-- (pendiente, aprobada, rechazada, etc)-->
-                                <p:selectOneMenu id="somEstadoSolicitudCapacitacion" value="#{crearSolicitudBean.tipoCapacitacionSeleccionada}">
+                                <p:selectOneMenu id="somEstadoSolicitudCapacitacion" value="#{crearSolicitudBean.estadoSolicitudCapacitacion}">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
                                     <f:selectItems value="#{parametrosController.listEstadoSolicitud}" var="estadoSolicitudCapacitacion"
                                                    itemValue="#{estadoSolicitudCapacitacion}" 
                                                    itemDisabled="#{estadoSolicitudCapacitacion.flgEstado}"
@@ -57,14 +56,13 @@
                             </p:column>
                             <p:column>
                                 <!-- (Interna y externa)-->
-                                <p:selectOneMenu id="somTipoCapacitacion" value="#{crearSolicitudBean.tipoCapacitacionSeleccionada}">
-                                    <f:selectItems value="#{crearSolicitudBean.listTipoCapacitacion}" var="tipoCapacitacion"
-                                                   itemValue="#{tipoCapacitacion}" 
-                                                   itemDisabled="#{tipoCapacitacion.flgEstado}"
-                                                   itemLabel="#{tipoCapacitacion.descripcion}" />
+                                <p:selectOneMenu id="somTipoCapacitacion" value="#{crearSolicitudBean.idTipoModalidad}">
+                                    <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
+                                    <f:selectItems value="#{parametrosController.listTipoModalidad}" var="tipoModalidad"
+                                                   itemValue="#{tipoModalidad}" 
+                                                   itemLabel="#{tipoModalidad.descripcion}" />
                                 </p:selectOneMenu>
                             </p:column>
-
                             <p:column>
                                 <h:outputLabel styleClass="anchoLabel" value="Tipo de formación:"/>
                                 <p:spacer width="10" />
@@ -77,11 +75,10 @@
                                                    itemLabel="#{tipoFormacion.descripcion}" />
                                 </p:selectOneMenu>
                             </p:column>
-                            
                             <p:column>
-                            <h:outputLabel id="lblPeriodo" value="Periodo:" style="font-weight: bold;" />
+                                <h:outputLabel id="lblPeriodo" value="Periodo:" style="font-weight: bold;" />
                                 <p:spacer width="5" />
-                                <p:selectOneMenu id="cmbPeriodo" value="#{listadoPlanCapacitacion.anioSeleccionado}">
+                                <p:selectOneMenu id="cmbPeriodo" value="#{crearSolicitudBean.anioSeleccionado}">
                                     <f:selectItem itemLabel="[SELECCIONE]" itemValue="0" noSelectionOption="true" />
                                     <f:selectItem itemLabel="2015" itemValue="#{2015}" />
                                     <f:selectItem itemLabel="2016" itemValue="#{2016}" />
@@ -92,33 +89,71 @@
                                     <f:selectItem itemLabel="2021" itemValue="#{2021}" />
                                 </p:selectOneMenu>
                             </p:column>
-
                             <p:commandButton id="btnBuscar" action="#{crearSolicitudBean.buscarSolicitudCapacitacion}"
                                              value="Buscar"
                                              icon="ui-icon-circle-plus"
                                              onstart="PF('wgvFrmBuscarSolicitud').show();"
                                              oncomplete="PF('wgvFrmBuscarSolicitud').hide();"
-                                             process="@this :frmBuscarSolicitudCapacitacion" partialSubmit="true" />
+                                             process="@this :frmBuscarSolicitudCapacitacion"  />
 
                             <h:panelGroup />
                         </p:panelGrid>
                     </p:fieldset>
+                    <p:dataTable id="dtLstSolicitud" 
+                                 var="detalleSolicitud"
+                                 reflow="true"
+                                 emptyMessage="Por favor, Busque el listado de solicitudes"
+                                 rowIndexVar="cantidad"
+                                 value="#{crearSolicitudBean.listSolicitud}">
+                        <p:column id="colNro" headerText="Item">
+                            <h:outputText value="#{cantidad + 1}" />
+                        </p:column>
+                        <p:column id="colAnioSol" headerText="Anio Solicitud">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.periodo}" />
+                        </p:column>
+                        <p:column id="colNroDoc" headerText="Nro Documento">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.id}" />
+                        </p:column>
+                        <p:column id="colFecDocumento" headerText="Fecha Documento">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.fechaDocumento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"
+                                                   timeZone="America/Lima" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column id="colFecAtencion" headerText="Fecha Atencion">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.fechaAtencion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"
+                                                   timeZone="America/Lima" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column id="colCapacitacion" headerText="Tipo Capacitacion">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.idTipoCapacitacion.descripcion}" />
+                        </p:column>
+                        <p:column id="colEstado" headerText="Estado">
+                            <h:outputText value="#{detalleSolicitud.idSolCap.idEstado.descripcion}" />
+                        </p:column>
+                        <p:column id="colEditar" headerText="Editar">
+                            <p:commandButton id="btnEditar" 
+                                             icon="ui-icon-pencil" 
+                                             action="#{crearSolicitudBean.seleccionarDetalleSolicitud(cantidad)}"
+                                             onstart="PF('wgvFrmBuscarSolicitud').show();" 
+                                             disabled="#{detalleSolicitud.idSolCap.idEstado.id eq 18}"
+                                             oncomplete="PF('wgvFrmBuscarSolicitud').hide(); PF('wgvDlgCrearSolicitudCapacitacion').show();"
+                                             process="@this" partialSubmit="true">
+                                <f:setPropertyActionListener value="#{detalleSolicitud.idSolCap}" target="#{crearSolicitudBean.soliCap}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
 
-                    <p:commandButton value="Nuevo"
+                    <p:commandButton value="Nueva solicitud"
                                      icon="ui-icon-disk"
-                                     onstart="PF('wgvDlgCrearSolicitudCapacitacion').show();"/>
-                    
-                    <p:commandButton value="Salir"
-                                         icon="ui-icon-circle-close"
-                                         onstart="PF('wgvFrmBuscarSolicitud').show();"
-                                         oncomplete="PF('wgvFrmBuscarSolicitud').hide();"
-                                         action="/solicitudCapacitacion/List.xhtml" />
+                                     action="#{crearSolicitudBean.nuevaSolicitudCapacitacion}"
+                                     onstart="PF('wgvDlgCrearSolicitudCapacitacion').show();" />
+
                 </h:form>
 
                 <ui:include src="/actualizarSolicitudCapacitacion/frmRegistrarSolicitudCapacitacion.xhtml" />
-
                 <ui:include src="/actualizarSolicitudCapacitacion/dlgFrmListadoParticipantesAElegir.xhtml" />
-                
             </ui:define>
         </ui:composition>
     </h:body>

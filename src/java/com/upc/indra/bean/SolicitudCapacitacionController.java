@@ -94,7 +94,7 @@ public class SolicitudCapacitacionController implements Serializable {
             //items = getFacade().findListByArea(usuarioLogueado.getIdArea());
             List<SolicitudCapacitacion> elimi = new ArrayList<>();
             for(SolicitudCapacitacion ssss: items) {
-                if(ssss.getFechaSolicitud().getYear() != fechaActual.getYear()) {
+                if(ssss.getFechaDocumento().getYear() != fechaActual.getYear()) {
                     elimi.add(ssss);
                 }
             }

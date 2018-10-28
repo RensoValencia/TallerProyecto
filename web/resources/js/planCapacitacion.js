@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 
+$(document).ready(function() {
+    $("#divCalendario").hide();
+});
 
 PlanCapacitacionJS = {  
 
@@ -42,6 +45,7 @@ PlanCapacitacionJS = {
         $("#frmListadoPlanCapacitacion\\:lblFechas").hide();
         $("#frmListadoPlanCapacitacion\\:clrFechaDesde_input").hide();
         $("#frmListadoPlanCapacitacion\\:clrFechaHasta_input").hide();
+        $("#divCalendario").hide();
     },
     
     mostrarTipoPlanExterna: function() {
@@ -50,6 +54,7 @@ PlanCapacitacionJS = {
         $("#frmListadoPlanCapacitacion\\:lblFechas").show();
         $("#frmListadoPlanCapacitacion\\:clrFechaDesde_input").show();
         $("#frmListadoPlanCapacitacion\\:clrFechaHasta_input").show();
+        $("#divCalendario").show();
     },
     
     ocultarTipoPlanInterna1: function() { 
@@ -58,6 +63,7 @@ PlanCapacitacionJS = {
         $("#frmListSolicitudCapacitacion\\:lblFechas").hide();
         $("#frmListSolicitudCapacitacion\\:clrFechaDesde_input").hide();
         $("#frmListSolicitudCapacitacion\\:clrFechaHasta_input").hide();
+        $("#divCalendario").hide();
     },
     
     mostrarTipoPlanExterna1: function() {
@@ -66,6 +72,7 @@ PlanCapacitacionJS = {
         $("#frmListSolicitudCapacitacion\\:lblFechas").show();
         $("#frmListSolicitudCapacitacion\\:clrFechaDesde_input").show();
         $("#frmListSolicitudCapacitacion\\:clrFechaHasta_input").show();
+        $("#divCalendario").show();
     }
   
     

@@ -18,7 +18,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import lombok.Getter;
@@ -34,6 +33,7 @@ import lombok.Setter;
 @NamedQueries({
     @NamedQuery(name = "DetalleSolicitud.findAll", query = "SELECT d FROM DetalleSolicitud d"),
     @NamedQuery(name = "DetalleSolicitud.findBySolCap", query = "SELECT d FROM DetalleSolicitud d WHERE d.idSolCap = :solCap"),
+    @NamedQuery(name = "DetalleSolicitud.findByEstadoTipoCapaAnioYCurso", query = "SELECT d FROM DetalleSolicitud d WHERE d.idSolCap.idEstado = :estado AND d.idFormacion.idTipoModalidad = :idTipCapa AND d.idSolCap.periodo = :periodo AND d.idFormacion.idTipoFormacion = :idTipForm"),
     @NamedQuery(name = "DetalleSolicitud.findById", query = "SELECT d FROM DetalleSolicitud d WHERE d.id = :id")})
 public class DetalleSolicitud implements Serializable {
 

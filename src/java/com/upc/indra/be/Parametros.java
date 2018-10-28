@@ -57,18 +57,14 @@ public class Parametros implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estado", fetch = FetchType.LAZY)
-    private List<Capacitacion> capacitacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estado", fetch = FetchType.LAZY)
-    private List<SolicitudCapacitacion> solicitudCapacitacionList;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoFormacion", fetch = FetchType.LAZY)
     private List<Formacion> formacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoSala", fetch = FetchType.LAZY)
     private List<Formacion> formacionList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoPlan", fetch = FetchType.LAZY)
     private List<PlanCapacitacion> planCapacitacionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estado", fetch = FetchType.LAZY)
-    private List<PlanCapacitacion> planCapacitacionList1;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoRecurso", fetch = FetchType.LAZY)
     private List<RecursoCapacitacion> recursoCapacitacionList;
     
@@ -124,24 +120,6 @@ public class Parametros implements Serializable {
     }
 
     @XmlTransient
-    public List<Capacitacion> getCapacitacionList() {
-        return capacitacionList;
-    }
-
-    public void setCapacitacionList(List<Capacitacion> capacitacionList) {
-        this.capacitacionList = capacitacionList;
-    }
-
-    @XmlTransient
-    public List<SolicitudCapacitacion> getSolicitudCapacitacionList() {
-        return solicitudCapacitacionList;
-    }
-
-    public void setSolicitudCapacitacionList(List<SolicitudCapacitacion> solicitudCapacitacionList) {
-        this.solicitudCapacitacionList = solicitudCapacitacionList;
-    }
-
-    @XmlTransient
     public List<Formacion> getFormacionList() {
         return formacionList;
     }
@@ -166,15 +144,6 @@ public class Parametros implements Serializable {
 
     public void setPlanCapacitacionList(List<PlanCapacitacion> planCapacitacionList) {
         this.planCapacitacionList = planCapacitacionList;
-    }
-
-    @XmlTransient
-    public List<PlanCapacitacion> getPlanCapacitacionList1() {
-        return planCapacitacionList1;
-    }
-
-    public void setPlanCapacitacionList1(List<PlanCapacitacion> planCapacitacionList1) {
-        this.planCapacitacionList1 = planCapacitacionList1;
     }
 
     @XmlTransient

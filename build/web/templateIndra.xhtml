@@ -11,7 +11,7 @@
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
-        <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputScript library="js" name="planCapacitacion.js"/>
         <title>Facelets Template</title>
     </h:head>
 
@@ -33,21 +33,15 @@
                                 <h:outputText value="Solicitudes de capacitación" />
                             </p:commandLink>   
                         </p>
-                    
-                        <p>
-                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/SolicitudesCapacitacion.xhtml">
-                                <h:outputText value="Actualizar Solicitud de Capacitación" />
-                            </p:commandLink>   
-                        </p>
                         
                         <p>
-                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/ListadoPlanCapacitacion.xhtml">
+                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmListadoPlanCapacitacion.xhtml">
                                 <h:outputText value="Planes de Capacitación" />
                             </p:commandLink>   
                         </p>
                     
                         <p>
-                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/RegistrarPlanCapacitacion.xhtml">
+                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmRegistrarPlanCapacitacion.xhtml">
                                 <h:outputText value="Nuevo plan de capacitación" />
                             </p:commandLink>   
                         </p>
@@ -132,7 +126,7 @@
                     </c:when>
                         <c:when test="#{user.idEmpleado.idRol.nivel eq 1}">
                             <p>
-                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/ListadoPlanCapacitacion.xhtml">
+                            <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmListadoPlanCapacitacion.xhtml">
                                 <h:outputText value="Planes de Capacitación" />
                             </p:commandLink>   
                         </p>
@@ -149,7 +143,7 @@
                             </p:commandLink>   
                         </p>
                             <p>
-                                <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/SolicitudesCapacitacion.xhtml">
+                                <p:commandLink ajax="false" action="/actualizarPlanPlanificacion/frmListadoCapacitacion.xhtml">
                                     <h:outputText value="Actualizar Solicitud de Capacitación" />
                                 </p:commandLink>   
                             </p>

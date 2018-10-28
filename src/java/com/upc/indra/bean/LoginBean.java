@@ -49,7 +49,7 @@ public class LoginBean implements Serializable{
                 } else if(user.getIdEmpleado().getIdRol().getNivel().compareTo(new Integer("3")) == 0) {//SISTEMAS
                     redireccion = "/faces/usuario/List";
                 } else {//otras areas
-                    redireccion = "/actualizarPlanPlanificacion/SolicitudesCapacitacion";
+                    redireccion = "/actualizarPlanPlanificacion/frmListadoPlanCapacitacion";
                 }
                     
             } else {

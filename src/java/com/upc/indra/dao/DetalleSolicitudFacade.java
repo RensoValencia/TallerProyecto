@@ -12,7 +12,6 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.Root;
-
 /**
  * @author RENSO
  * @date 24-abr-2018
@@ -86,5 +85,26 @@ public class DetalleSolicitudFacade extends AbstractFacade<DetalleSolicitud> {
         Root e = delete.from(DetalleSolicitud.class);
         delete.where(cb.equal(e.get("id"), ds.getId()));
         this.em.createQuery(delete).executeUpdate();
+    }
+    
+    public List<DetalleSolicitud> findByEstadoTipoCapaAnioYCurso(Parametros estado, Parametros idTipoCapacitacion, 
+            Integer periodo, Parametros idTipForm) {
+    
+        List<DetalleSolicitud> listParametros = null;
+        
+        try {
+            Query query = em.createNamedQuery("DetalleSolicitud.findByEstadoTipoCapaAnioYCurso");
+            query.setParameter("estado", estado);
+            query.setParameter("idTipCapa", idTipoCapacitacion);
+            query.setParameter("periodo", periodo);
+            query.setParameter("idTipForm", idTipForm);
+            
+            listParametros = query.getResultList();
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+            listParametros = null;
+        }
+        return listParametros;                
     }
 }

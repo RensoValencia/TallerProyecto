@@ -126,6 +126,10 @@ public class SolicitudCapacitacionFacade extends AbstractFacade<SolicitudCapacit
         return listParametros;
     }
     
+    public void actualizar(SolicitudCapacitacion solCap) {
+        em.merge(solCap);
+    }
+    
     public void guardarSolicitud(SolicitudCapacitacion solCap, DetalleSolicitud listDetSol) {
         em.persist(solCap); 
         em.persist(listDetSol);

@@ -36,6 +36,7 @@ public class ConstanteSingleton {
     @Getter @Setter public Parametros tipoPlanCapacitacionInterna;
     @Getter @Setter public Parametros tipoPlanCapacitacionExterna;
     @Getter @Setter public Parametros estadoSolicitudCapacitacionPendiente;
+    @Getter @Setter public Parametros estadoSolicitudCapacitacionEnviado;
     @Getter @Setter public Parametros estadoPlanCapacitacionEnProceso;
     @Getter @Setter public Parametros estadoPlanCapacitacionPendiente;
     @Getter @Setter public Parametros tipoRecursoMaterialEscritorio;
@@ -69,6 +70,10 @@ public class ConstanteSingleton {
         
         estadoSolicitudCapacitacionPendiente = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.ESTADO_SOLICITUD_CAPACITACION.getValue(), 
                 EstadoSolicitudCapacitacionEnum.PENDIENTE.getValue());
+        
+        estadoSolicitudCapacitacionEnviado = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.ESTADO_SOLICITUD_CAPACITACION.getValue(), 
+                EstadoCapacitacion.ENVIADO.getValue());
+        
         estadoSolicitudCapacitacionEnProceso = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.ESTADO_SOLICITUD_CAPACITACION.getValue(), 
                 EstadoCapacitacion.EN_PROCESO.getValue());
                 

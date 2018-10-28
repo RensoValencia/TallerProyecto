@@ -11,7 +11,6 @@ import com.upc.indra.enu.EstadoPlanCapacitacion;
 import com.upc.indra.enu.GrupoParametrosEnum;
 import com.upc.indra.enu.TipoPlanPlanificacion;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -31,8 +30,6 @@ public class ListadoPlanCapacitacion implements Serializable{
     
     @Getter @Setter private Parametros tipoCapacitacionSeleccionada;
     @Getter @Setter private Parametros estadoPlanCapacitacionSeleccionada;
-    @Getter @Setter private List<Parametros> listTipoCapacitacion; 
-    @Getter @Setter private List<Parametros> listEstadoTipoCapacitacion; 
     @Getter @Setter private List<PlanCapacitacion> listPlanCapacitacion; 
     @Getter @Setter private Date fechaInicio; 
     @Getter @Setter private Date fechaFin; 
@@ -47,8 +44,6 @@ public class ListadoPlanCapacitacion implements Serializable{
     
     @PostConstruct
     public void init() {
-        listTipoCapacitacion = parametrosFacade.findByGrupo(GrupoParametrosEnum.TIPO_PLAN_PLANIFICACION.getValue());
-        listEstadoTipoCapacitacion = parametrosFacade.findByGrupo(GrupoParametrosEnum.ESTADO_PLAN_CAPACITACION.getValue());
         tipoCapacitacionSeleccionada = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.TIPO_PLAN_PLANIFICACION.getValue(), TipoPlanPlanificacion.INTERNO.getValue());
         estadoPlanCapacitacionSeleccionada = parametrosFacade.findByGrupoCodigo(GrupoParametrosEnum.ESTADO_PLAN_CAPACITACION.getValue(), EstadoPlanCapacitacion.PENDIENTE.getValue());
         
@@ -61,10 +56,7 @@ public class ListadoPlanCapacitacion implements Serializable{
     
     public void modificarPlanCapacitacion(PlanCapacitacion planCapacitacion) {
         
-        /*RegistrarPlanCapacitacionBean beanPlan = 
-                (RegistrarPlanCapacitacionBean) ControladorAbstracto.getBean("registrarPlanCapacitacionBean");
         
-        beanPlan.    */    
         
     }
     
@@ -74,7 +66,7 @@ public class ListadoPlanCapacitacion implements Serializable{
         if(tipoCapacitacionSeleccionada.getId().compareTo(constanteSingleton.getTipoPlanCapacitacionInterna().getId()) == 0) {
             
             System.out.println("anioSeleccionado: " + anioSeleccionado);
-            if(null == anioSeleccionado || 0 == anioSeleccionado.intValue() ) {
+            if(null == anioSeleccionado || 0 == anioSeleccionado) {
                 JsfUtil.addErrorMessage("Por favor, Ud debe seleccionar el periodo");
                 return;
             }

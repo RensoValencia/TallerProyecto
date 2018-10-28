@@ -8,34 +8,29 @@
     <h:head>
         <title>Listado plan de capacitacion</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <h:outputStylesheet library="css" name="planCapacitacion.css"/>
-        <h:outputScript library="js" name="planCapacitacion.js"/>
         <f:event type="preRenderView" listener="#{plantillaBean.verificarSesion()}" />
     </h:head>
     <h:body>
-
         <ui:composition template="../templateIndra.xhtml">
-
             <ui:define name="top">
                 <div style="text-align: left;color: white;font-size: 26px; display: inline">
-                <img src="../img/indra.png" width="150px"  alt=""/>
-            </div>
-            <div style="display: inline; float: right;">
-                <h:form>
-                    <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.nombres} #{plantillaBean.usuario.apellidos}</span>
-                    - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idArea.nombre}</span> - Ud. tiene el puesto - 
-                    <span style="color: palegreen">#{plantillaBean.usuario.idPerfil.nombre}</span></b> - 
-                    <p:commandLink action="/usuario/Login.xhtml"
-                                     actionListener="#{loginBean.cerrarSesion()}">
-                        <h:outputText value="Cerrar sesión" />
-                    </p:commandLink>
-                </h:form>
-            </div>
+                    <img src="../img/indra.png" width="150px"  alt=""/>
+                </div>
+                <div style="display: inline; float: right;">
+                    <h:form>
+                        <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
+                            - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
+                            <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
+                        <p:commandLink action="/usuario/Login.xhtml"
+                                       actionListener="#{loginBean.cerrarSesion()}">
+                            <h:outputText value="Cerrar sesión" />
+                        </p:commandLink>
+                    </h:form>
+                </div>
             </ui:define>
-
             <ui:define name="content">
                 <h:form id="frmListadoPlanCapacitacion">
-                    
+
                     <p:blockUI id="block" block="dtPlanesCapacitacion" widgetVar="wgvDtPlanesCapacitacion">
                         <p:graphicImage url="../img/load.gif" />
                     </p:blockUI>
@@ -47,7 +42,7 @@
                                 <h:outputLabel value="Tipo de capacitacion:" style="font-weight: bold;" />
                                 <p:selectOneRadio id="sorTipoPlan" onchange="PlanCapacitacionJS.seleccionarTipoPlan(this.value);"
                                                   value="#{listadoPlanCapacitacion.tipoCapacitacionSeleccionada}">
-                                    <f:selectItems value="#{listadoPlanCapacitacion.listTipoCapacitacion}" var="tipoCapacitacion"
+                                    <f:selectItems value="#{parametrosController.listTipoCapacitacion}" var="tipoCapacitacion"
                                                    itemValue="#{tipoCapacitacion}" itemLabel="#{tipoCapacitacion.descripcion}" />
                                 </p:selectOneRadio>
                             </p:column>
@@ -62,27 +57,29 @@
                                     <f:selectItem itemLabel="2020" itemValue="#{2020}" />
                                     <f:selectItem itemLabel="2021" itemValue="#{2021}" />
                                 </p:selectOneMenu>
-                                <h:outputLabel id="lblFechas" value="Fecha:" style="font-weight: bold;" />
-                                <p:spacer width="5" />    
-                                <p:calendar id="clrFechaDesde"
-                                            pattern="dd/MM/yyyy"
-                                            mask="99/99/9999"
-                                            locale="es"
-                                            placeholder="dd/MM/yyyy"
-                                            value="#{listadoPlanCapacitacion.fechaInicio}" />
-                                <p:spacer width="10" />
-                                <p:calendar id="clrFechaHasta" 
-                                            pattern="dd/MM/yyyy"
-                                            mask="99/99/9999"
-                                            locale="es"
-                                            placeholder="dd/MM/yyyy"
-                                            value="#{listadoPlanCapacitacion.fechaFin}" />
+                                <div id="divCalendario">
+                                    <h:outputLabel id="lblFechas" value="Fecha Inicio: " style="font-weight: bold;" />
+                                    <p:spacer width="5" />    
+                                    <p:calendar id="clrFechaDesde"
+                                                pattern="dd/MM/yyyy"
+                                                mask="99/99/9999"
+                                                locale="es"
+                                                placeholder="dd/MM/yyyy"
+                                                value="#{listadoPlanCapacitacion.fechaInicio}" />
+                                    <p:spacer width="10" />
+                                    <h:outputLabel id="lblFechas11" value="Fecha Fin: " style="font-weight: bold;" />
+                                    <p:calendar id="clrFechaHasta" 
+                                                pattern="dd/MM/yyyy"
+                                                mask="99/99/9999"
+                                                locale="es"
+                                                placeholder="dd/MM/yyyy"
+                                                value="#{listadoPlanCapacitacion.fechaFin}" />
+                                </div>
                             </p:column>       
-
                             <h:outputLabel id="lblSituacion" value="Situacion:" style="font-weight: bold;" />
 
                             <p:selectOneMenu id="cmbSituacion" value="#{listadoPlanCapacitacion.estadoPlanCapacitacionSeleccionada}">
-                                <f:selectItems value="#{listadoPlanCapacitacion.listEstadoTipoCapacitacion}" var="estadoCapa"
+                                <f:selectItems value="#{parametrosController.listEstadoTipoCapacitacion}" var="estadoCapa"
                                                itemValue="#{estadoCapa}" itemLabel="#{estadoCapa.descripcion}" />
                             </p:selectOneMenu>
 
@@ -106,16 +103,16 @@
                         <p:column id="Nro" headerText="Nro">
                             <h:outputText value="#{cantidad + 1}" />
                         </p:column>
-                        <p:column id="colNroPlan" headerText="Nro plan">
+                        <p:column id="colNroPlan" headerText="Nro plan" sortBy="#{plan.id}">
                             <h:outputText value="#{plan.id}" />
                         </p:column>
-                        <p:column id="colTipo" headerText="Tipo">
+                        <p:column id="colTipo" headerText="Tipo" sortBy="#{plan.idTipoPlan.descripcion}">
                             <h:outputText value="#{plan.idTipoPlan.descripcion}" />
                         </p:column>
-                        <p:column id="colEstado" headerText="Estado">
+                        <p:column id="colEstado" headerText="Estado" sortBy="#{plan.estado.descripcion}">
                             <h:outputText value="#{plan.estado.descripcion}" />
                         </p:column>
-                        <p:column id="colFecEje" headerText="Fecha ejecucion">
+                        <p:column id="colFecEje" headerText="Fecha ejecucion" sortBy="#{plan.fechaEjecucion}">
                             <h:outputText value="#{plan.fechaEjecucion}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
@@ -126,27 +123,25 @@
                         <p:column id="colObs" headerText="Situacion">
                             Observado
                         </p:column>
-                        <p:column id="colGenerar" headerText="#">
+                        <p:column id="colGenerar" headerText="Evaluar">
                             <p:commandButton id="btnGenerar" 
                                              action="#{listadoPlanCapacitacion.modificarPlanCapacitacion(plan)}"
                                              icon="ui-icon-document" />
                         </p:column>
-                        <p:column id="colBtnEdi" headerText="#">
+                        <p:column id="colBtnEdi" headerText="Modificar">
                             <p:commandButton id="btnEditar" icon="ui-icon-pencil" />
                         </p:column>
-                        <p:column id="colBtnPrin" headerText="#">
+                        <p:column id="colBtnPrin" headerText="Imprimir">
                             <p:commandButton id="btnPrint" icon="ui-icon-print" />
                         </p:column>
                     </p:dataTable>
                     <p:toolbar>
                         <f:facet name="left">
-                            <p:commandButton id="btnNuevo" value="Nuevo" icon="ui-icon-document" 
+                            <p:commandButton id="btnNuevo" value="Nuevo plan de capacitacion" icon="ui-icon-document" 
                                              onstart="PF('wgvDtPlanesCapacitacion').show();"
                                              oncomplete="PF('wgvDtPlanesCapacitacion').hide();"
-                                             action="/actualizarPlanPlanificacion/RegistrarPlanCapacitacion.xhtml" />
+                                             action="/actualizarPlanPlanificacion/frmRegistrarPlanCapacitacion.xhtml" />
 
-                            <p:commandButton id="btnSalir" value="Salir" icon="ui-icon-circle-close" 
-                                             onclick="alert('saliste de la aplicacion');" />
                         </f:facet>
                     </p:toolbar>
                 </h:form>

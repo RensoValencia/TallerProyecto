@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -11,7 +6,7 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>Registrar solicitud de capacitacion</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
@@ -23,7 +18,7 @@ and open the template in the editor.
                           position="center"
                           closeOnEscape="true"
                           minimizable="false" 
-                          width="70%" height="80%">
+                          width="95%" height="85%">
         <h:form id="frmCrearSolicitudCapacitacion">
         
             <p:blockUI id="block" block="frmCrearSolicitudCapacitacion" widgetVar="wgvFrmCrearSolicitudCapacitacion">
@@ -80,7 +75,7 @@ and open the template in the editor.
                                 </p:selectOneMenu>
                             </p:column>
 
-                            <p:commandButton id="btnAgregar" action="#{crearSolicitudBean.agregarCurso}"
+                            <p:commandButton id="btnAgregar" action="#{crearSolicitudBean.agregarDetalleSolicitud}"
                                              value="Agregar"
                                              icon="ui-icon-circle-plus"
                                              onstart="PF('wgvFrmCrearSolicitudCapacitacion').show();"
@@ -89,12 +84,12 @@ and open the template in the editor.
 
                             <h:panelGroup />
                         </p:panelGrid>
-                    </p:fieldset>
+                    <hr />
                     <p:dataTable id="dtListDetalleSolicitud"
                                  reflow="true"
                                  var="detalleSolicitud"
                                  rowIndexVar="cantidad"
-                                 emptyMessage="Listado de solicitudes de capacitación"
+                                 emptyMessage="Listado de cursos por solicitud"
                                  value="#{crearSolicitudBean.listDetalleSolicitud}">
                         <p:column id="colNro" headerText="Nro">
                             <h:outputText value="#{cantidad + 1}" />
@@ -111,10 +106,12 @@ and open the template in the editor.
                         <p:column id="colInscritos" headerText="Participantes inscritos">
                             <h:outputText value="#{detalleSolicitud.numeroParticipantes}" />
                         </p:column>
-                        <p:column id="colAgregar" headerText="Agregar participante">
+                        <p:column id="colAgregar" headerText="Ver participantes">
                             <p:commandButton icon="ui-icon-circle-plus"
                                              process="@this"
                                              partialSubmit="true"
+                                             onstart="PF('wgvFrmCrearSolicitudCapacitacion').show();"
+                                             oncomplete="PF('wgvFrmCrearSolicitudCapacitacion').hide();"
                                              action="#{crearSolicitudBean.agregarListadoParticipantes(detalleSolicitud)}" />
                         </p:column>
                         <p:column id="colRemover" headerText="Remover">
@@ -134,7 +131,26 @@ and open the template in the editor.
                                 <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                             </p:confirmDialog>
                         </p:column>
-                    </p:dataTable>           
+                    </p:dataTable>  
+            
+                    <p:commandButton value="Guardar"
+                                     icon="ui-icon-disk"
+                                     onstart="PF('wgvFrmCrearSolicitudCapacitacion').show();"
+                                     oncomplete="PF('wgvFrmCrearSolicitudCapacitacion').hide(); PF('wgvDlgCrearSolicitudCapacitacion').hide();"/>
+            
+                    <p:commandButton value="Enviar"
+                                     icon="ui-icon-disk"
+                                     action="#{crearSolicitudBean.actualizarSolicitud}"
+                                     onstart="PF('wgvDlgCrearSolicitudCapacitacion').show();">
+                        <p:confirm header="Mensaje de validacion" 
+                                           message="¿Estas seguro de enviar la solicitud?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="SI" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="NO" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                    </p:fieldset>
+            
             </h:form>
             <hr />
             <ui:include src="/actualizarSolicitudCapacitacion/frmListadoParticipante.xhtml" />

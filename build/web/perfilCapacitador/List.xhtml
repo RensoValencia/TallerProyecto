@@ -32,10 +32,13 @@
              
         <ui:define name="content">
             <h:form id="PerfilCapacitadorListForm">
-                <p>
-                <b>Bienvenido(a) <span style="color: #D20005">#{plantillaBean.usuario.nombres} #{plantillaBean.usuario.apellidos}</span>
-                    - Ud. es del área <span style="color: #D20005">#{plantillaBean.usuario.idArea.nombre}</span> - Ud. tiene el puesto - 
-                    <span style="color: #D20005">#{plantillaBean.usuario.idPerfil.nombre}</span></b>
+                <b>Bienvenido(a) <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.nombres} #{plantillaBean.usuario.idEmpleado.apellidos}</span>
+                            - Ud. es del área <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.idArea.nombre}</span> - Ud. tiene el puesto - 
+                            <span style="color: palegreen">#{plantillaBean.usuario.idEmpleado.idRol.nombre}</span></b> - 
+                    <p:commandLink action="/usuario/Login.xhtml" ajax="false"
+                                     actionListener="#{loginBean.cerrarSesion()}">
+                        <h:outputText value="Cerrar sesión" />
+                    </p:commandLink>
             </p> 
                 <p:panel>
                     <p:dataTable id="datalist" value="#{perfilCapacitadorController.items}" var="item"

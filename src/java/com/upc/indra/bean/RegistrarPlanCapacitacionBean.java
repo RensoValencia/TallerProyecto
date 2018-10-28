@@ -413,7 +413,7 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
             ControladorAbstracto.executeJavascript("$('#divSegundo').hide(); $('#divTercero').show();");
         } else {
             JsfUtil.addSuccessMessage("Se grabo satisfactoriamente el plan de capacitacion, las capacitaciones y los materiales para la capacitación.");
-            ControladorAbstracto.getExternalContext().redirect("/TallerProyecto2/faces/actualizarPlanPlanificacion/ListadoPlanCapacitacion.xhtml");
+            ControladorAbstracto.getExternalContext().redirect("/TallerProyecto2/faces/actualizarPlanPlanificacion/frmListadoPlanCapacitacion.xhtml");
         }
         
         } catch(Exception e) {
@@ -445,7 +445,7 @@ public class RegistrarPlanCapacitacionBean implements Serializable{
         recursoCapacitacionFacade.guardarPerfiles(planCapacitacion, listPerfiles);
             
             JsfUtil.addSuccessMessage("Se grabo satisfactoriamente el plan de capacitacion, las capaciones, los materiales y los perfiles para los cursos de especialización.");
-            ControladorAbstracto.getExternalContext().redirect("/TallerProyecto2/faces/actualizarPlanPlanificacion/ListadoPlanCapacitacion.xhtml");
+            ControladorAbstracto.getExternalContext().redirect("/TallerProyecto2/faces/actualizarPlanPlanificacion/frmListadoPlanCapacitacion.xhtml");
         } catch(Exception ex) {
             JsfUtil.addSuccessMessage("Ha Ocurrido un error inesperado contactarse con sistemas al grabar.");
             ex.printStackTrace();

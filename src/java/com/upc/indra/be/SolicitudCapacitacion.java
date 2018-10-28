@@ -36,12 +36,12 @@ import lombok.Setter;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SolicitudCapacitacion.findAll", query = "SELECT s FROM SolicitudCapacitacion s"),
-    @NamedQuery(name = "SolicitudCapacitacion.findListSolCapByEstado", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.estado = :estado ORDER BY s.id DESC"),
+    @NamedQuery(name = "SolicitudCapacitacion.findListSolCapByEstado", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.idEstado = :estado ORDER BY s.id DESC"),
     @NamedQuery(name = "SolicitudCapacitacion.findListByArea", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.idArea = :area ORDER BY s.fechaDocumento DESC"),
     @NamedQuery(name = "SolicitudCapacitacion.findById", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.id = :id"),
-    @NamedQuery(name = "SolicitudCapacitacion.findByIdEstadoFechas", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.estado = :estado AND s.fechaDocumento BETWEEN :fi AND :ff AND s.idTipoCapacitacion = :aaa"),
-    @NamedQuery(name = "SolicitudCapacitacion.findByIdEstadoPeriodo", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.estado = :estado AND s.periodo = :periodo AND s.idTipoCapacitacion = :aaa"),
-    @NamedQuery(name = "SolicitudCapacitacion.findByIdTipoPlanCapacitacionAndEstado", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.idTipoCapacitacion = :idTipoPlanCapacitacion AND s.estado = :estado"),
+    @NamedQuery(name = "SolicitudCapacitacion.findByIdEstadoFechas", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.idEstado = :estado AND s.fechaDocumento BETWEEN :fi AND :ff AND s.idTipoCapacitacion = :aaa"),
+    @NamedQuery(name = "SolicitudCapacitacion.findByIdEstadoPeriodo", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.idEstado = :estado AND s.periodo = :periodo AND s.idTipoCapacitacion = :aaa"),
+    @NamedQuery(name = "SolicitudCapacitacion.findByIdTipoPlanCapacitacionAndEstado", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.idTipoCapacitacion = :idTipoPlanCapacitacion AND s.idEstado = :estado"),
     @NamedQuery(name = "SolicitudCapacitacion.findByFechaSolicitud", query = "SELECT s FROM SolicitudCapacitacion s WHERE s.fechaDocumento = :fechaDocumento"),})
 public class SolicitudCapacitacion implements Serializable {
 
@@ -51,8 +51,8 @@ public class SolicitudCapacitacion implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "FECHA_DOCUMENTO")
     @Temporal(TemporalType.DATE)
     private Date fechaDocumento;
@@ -66,15 +66,16 @@ public class SolicitudCapacitacion implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "OBSERVACION")
     private String observacion;
-    @JoinColumn(name = "ESTADO", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_ESTADO", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Parametros estado;
+    private Parametros idEstado;
+    
     @JoinColumn(name = "ID_AREA", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Area idArea;
     
     @Column(name = "PERIODO")
-    @Getter @Setter private String periodo;
+    @Getter @Setter private Integer periodo;
     
     @JoinColumn(name = "ID_TIPO_CAPACITACION", referencedColumnName = "ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -131,12 +132,12 @@ public class SolicitudCapacitacion implements Serializable {
         this.observacion = observacion;
     }
 
-    public Parametros getEstado() {
-        return estado;
+    public Parametros getIdEstado() {
+        return idEstado;
     }
 
-    public void setEstado(Parametros estado) {
-        this.estado = estado;
+    public void setIdEstado(Parametros idEstado) {
+        this.idEstado = idEstado;
     }
 
     public Area getIdArea() {

@@ -32,7 +32,7 @@ import lombok.Setter;
 @NamedQueries({
     @NamedQuery(name = "Participante.findAll", query = "SELECT p FROM Participante p"),
     @NamedQuery(name = "Participante.findById", query = "SELECT p FROM Participante p WHERE p.id = :id"),
-    @NamedQuery(name = "Participante.findByIdArea", query = "SELECT p FROM Participante p WHERE p.id = :idArea"),
+    @NamedQuery(name = "Participante.findByIdArea", query = "SELECT p FROM Participante p WHERE p.idUsuario.idEmpleado.idRol.idArea.id = :idArea"),
     @NamedQuery(name = "Participante.findByIdUsuario", query = "SELECT p FROM Participante p WHERE p.idUsuario = :idUsuario")})
 public class Participante implements Serializable {
 

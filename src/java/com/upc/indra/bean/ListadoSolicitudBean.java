@@ -62,7 +62,7 @@ public class ListadoSolicitudBean implements Serializable{
     
     public void cambiarEstado(SolicitudCapacitacion sc, int cantidad) {
         solicitudCapacitacionFacade.actualizarEstado(constanteSingleton.getEstadoSolicitudCapacitacionPendiente(), sc);
-        sc.setEstado(constanteSingleton.getEstadoSolicitudCapacitacionPendiente());
+        sc.setIdEstado(constanteSingleton.getEstadoSolicitudCapacitacionPendiente());
         
         JsfUtil.addSuccessMessage("Se ha deshabilitado la opción para actualizar dado que ya se encuentra como pendiente.");
         ControladorAbstracto.updateComponent("frmListSolicitudCapacitacion:dtPlanesCapacitacion:"+cantidad+":btnEditar"); 
@@ -70,10 +70,12 @@ public class ListadoSolicitudBean implements Serializable{
     
     public void listarSolicitudes() {
     
+        System.out.println("anioSeleccionado: " + anioSeleccionado);
+        System.out.println("tipoCapacitacionSeleccionada: " + tipoCapacitacionSeleccionada);
+        
         if(tipoCapacitacionSeleccionada.getId().compareTo(constanteSingleton.getTipoPlanCapacitacionInterna().getId()) == 0) {
             
-            System.out.println("anioSeleccionado: " + anioSeleccionado);
-            if(null == anioSeleccionado || 0 == anioSeleccionado.intValue() ) {
+            if(null == anioSeleccionado || 0 == anioSeleccionado ) {
                 JsfUtil.addErrorMessage("Por favor, Ud debe seleccionar el periodo");
                 return;
             }
